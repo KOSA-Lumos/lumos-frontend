@@ -10,13 +10,6 @@ module.exports = defineConfig({
           '^/api': '/api/notice/basicInfo.do'
         },
       },
-      '/mediate/rest/cpmsapi030/cpmsapi030': {
-        target: 'http://api.childcare.go.kr',
-        changeOrigin: true,
-        headers: {
-          Host: 'api.childcare.go.kr'
-        }
-      }
     }
   },
   transpileDependencies: true,

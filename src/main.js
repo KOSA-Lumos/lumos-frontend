@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import mainPageFooter from './components/footer/mainPageFooter.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify'
@@ -15,5 +14,4 @@ createApp(App)
   .use(router)
   .use(store)
   .use(vuetify)
-  .component('main-page-footer', mainPageFooter)
   .mount('#app')

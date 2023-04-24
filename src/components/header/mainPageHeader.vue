@@ -1,30 +1,32 @@
 <template>
   <div>
-    <button @click="showModal = true">Show Modal</button>
-    <div to="body">
-      <div v-if="showModal" class="modal">
-        <h2>Modal Title</h2>
-        <p>Modal Content</p>
-        <button @click="showModal = false">Close Modal</button>
-      </div>
-    </div>
+    <canvas ref="myChart"></canvas>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import Chart from 'chart.js/auto'
 
 export default {
-  setup() {
-    const showModal = ref(false)
-
-    return {
-      showModal
-    }
+  mounted() {
+    this.$nextTick(() => {
+      const ctx = this.$refs.myChart.getContext('2d')
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+            label: 'Sales',
+            data: [65, 59, 80, 81, 56, 55, 40],
+            fill: false,
+            borderColor: 'rgb(75, 192, 192)',
+            tension: 0.1
+          }]
+        },
+        options: {}
+      })
+    })
   }
 }
+
 </script>
-
-
-<style>
-</style>
