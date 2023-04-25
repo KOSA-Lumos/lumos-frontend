@@ -1,47 +1,37 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import MainPage from '../components/body/mainPage.vue';
-import DetailGrade from '../components/footer/detailGrade.vue';
-import FooterMeals from '../components/footer/footerMeals.vue';
-import FooterPictures from '../components/footer/footerPictures.vue';
-import FooterCctv from '../components/footer/footerCctv.vue';
-import DetailView from '../components/footer/detailView.vue';
+import Normalinfo from '../components/body/normalInfo.vue';
+import Reviewresult from '../components/body/reviewResult.vue';
+import Datagraph from '../components/body/dataGraph.vue';
+import Detailinfo from '../components/body/detailInfo.vue';
+import Gradeeval from '../components/body/gradeEval.vue';
 
 const routes = [
-  {
-    children: [
       {
-        path: '/mainPage',
-        name: 'mainPage',
-        component: MainPage,
+        path: '/dataGraph',
+        name: 'Datagraph',
+        component: Datagraph,
       }, 
       {
-        path: '/detailGrade',
-        name: 'DetailGrade',
-        component: DetailGrade,
+        path: '/detailInfo',
+        name: 'Detailinfo',
+        component: Detailinfo,
       }, 
       {
-        path: '/footerMeals',
-        name: 'FooterMeals',
-        component: FooterMeals,
+        path: '/gradeEval',
+        name: 'Gradeeval',
+        component: Gradeeval,
       }, 
       {
-        path: '/footerPictures',
-        name: 'FooterPictures',
-        component: FooterPictures,
+        path: '/normalInfo',
+        name: 'Normalinfo',
+        component: Normalinfo,
       }, 
       {
-        path: '/footerCctv',
-        name: 'FooterCctv',
-        component: FooterCctv,
+        path: '/reviewResult',
+        name: 'Reviewresult',
+        component: Reviewresult,
       }, 
-      {
-        path: '/detailView',
-        name: 'DetailView',
-        component: DetailView,
-      },
-    ]
-  }
-];
+    ];
 
 const router = createRouter({
   history: createWebHistory(),
