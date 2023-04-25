@@ -83,20 +83,5 @@ export default {
 </script>
 
 <style scoped>
-.buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: flex-start;
-  padding: 20px;
-  background-size: flex;
-  height: 20%;
-  width: 100%;
-  margin-bottom: 20px;
-}
 
-.buttons a {
-  margin-right: 10px;
-  background-color: #ffd600;
-}
 </style>
