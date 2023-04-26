@@ -1,13 +1,8 @@
 <template>
   <v-container>
     <div>
-      <button @click="callEmotionApp">Call Emotion App</button>
-    </div>
-    <div>
-      <button @click="callGptApp">Call Gpt App</button>
-    </div>
-        <div>
-      <button @click="callNaverApp">Call Naver App</button>
+      유
+      <button @click="callFlaskApp">Call Flask App</button>
     </div>
     <v-col cols="12">
       <v-btn @click="getData">유치원 데이터 가져오기</v-btn>
@@ -53,35 +48,9 @@ export default {
       response: "",
     });
 
-    async function callEmotionApp() {
+    async function callFlaskApp() {
       try {
-        const response = await fetch("http://localhost:5000/emotionApi", {
-          method: "POST",
-        });
-        const responseData = await response.json();
-        data.response = responseData;
-        console.log(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function callGptApp() {
-      try {
-        const response = await fetch("http://localhost:5000/gptApi", {
-          method: "POST",
-        });
-        const responseData = await response.json();
-        data.response = responseData;
-        console.log(responseData);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function callNaverApp() {
-      try {
-        const response = await fetch("http://localhost:5000/naverApi", {
+        const response = await fetch("http://localhost:5000/similarity", {
           method: "POST",
         });
         const responseData = await response.json();
@@ -109,7 +78,7 @@ export default {
         });
     };
 
-    return { data, getData, callEmotionApp, callGptApp, callNaverApp };
+    return { data, getData, callFlaskApp };
   },
 };
 </script>

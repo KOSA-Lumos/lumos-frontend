@@ -1,5 +1,6 @@
 <template>
   <div>
+    유
     <canvas ref="myChart"></canvas>
   </div>
 </template>
