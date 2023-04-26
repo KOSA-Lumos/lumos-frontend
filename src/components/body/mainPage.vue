@@ -1,11 +1,18 @@
 <template>
   <div>
     <div class="buttons">
-      <router-link to="/normalinfo"> 기본정보 </router-link>
-      <router-link to="/gradeeval"> 등급평가 </router-link>
-      <router-link to="/detailinfo"> 상세정보 </router-link>
-      <router-link to="/reviewresult"> 리뷰분석결과 </router-link>
-      <router-link to="/datagraph"> 데이터비교 </router-link>
+      <router-link to="/child/normalinfo"> 기본정보 </router-link>
+      <router-link to="/child/gradeeval"> 등급평가 </router-link>
+      <router-link to="/child/detailinfo"> 상세정보 </router-link>
+      <router-link to="/child/reviewresult"> 리뷰분석결과 </router-link>
+      <router-link to="/child/datagraph"> 데이터비교 </router-link>
+    </div>
+        <div class="buttons" v-if="sdf">
+      <router-link to="/child/kidsnormalinfo"> (유)기본정보 </router-link>
+      <router-link to="/child/kidsgradeeval"> (유)등급평가 </router-link>
+      <router-link to="/child/kidsdetailinfo"> (유)상세정보 </router-link>
+      <router-link to="/child/kidsreviewresult"> (유)리뷰분석결과 </router-link>
+      <router-link to="/child/kidsdatagraph"> (유)데이터비교 </router-link>
     </div>
     <div>
       <router-view />
@@ -14,6 +21,15 @@
 </template>
 
 <script>
+export default {
+  name: 'LastChangeMethods',
+  props: {
+    sdf: {
+      type: Boolean,
+      default: false
+    }
+  },
+}
 </script>
 
 
