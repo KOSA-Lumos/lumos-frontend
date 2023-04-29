@@ -30,8 +30,8 @@
 </template>
 
 <script>
-import RecommendCenterList from '../body/HomeSide/RecommendCenterList.vue'
-import SearchCenterList from '../body/HomeSide/SearchCenterList.vue'
+import RecommendCenterList from '@/components/body/HomeSide/RecommendCenterList.vue'
+import SearchCenterList from '@/components/body/HomeSide/SearchCenterList.vue'
 
 export default {
   components: { RecommendCenterList, SearchCenterList },

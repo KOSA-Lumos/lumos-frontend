@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import MapBox from '../body/HomeContents/MapBox.vue'
-import SpecSelectBox from '../body/HomeContents/SpecSelectBox.vue'
+import MapBox from '@/components/body/HomeContents/MapBox.vue'
+import SpecSelectBox from '@/components/body/HomeContents/SpecSelectBox.vue'
 
 export default {
   components: { SpecSelectBox, MapBox },
