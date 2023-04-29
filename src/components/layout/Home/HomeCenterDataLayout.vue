@@ -45,11 +45,11 @@
 </template>
 
 <script>
-import CenterBasicInfo from '../body/HomeCenterData/CenterBasicInfo.vue'
-import CenterDetailInfo from '../body/HomeCenterData/CenterDetailInfo.vue'
-import CenterEvalGrade from '../body/HomeCenterData/CenterEvalGrade.vue'
-import CenterReviewData from '../body/HomeCenterData/CenterReviewData.vue'
-import CenterStatusGraph from '../body/HomeCenterData/CenterStatusGraph.vue'
+import CenterBasicInfo from '@/components/body/HomeCenterData/CenterBasicInfo.vue'
+import CenterDetailInfo from '@/components/body/HomeCenterData/CenterDetailInfo.vue'
+import CenterEvalGrade from '@/components/body/HomeCenterData/CenterEvalGrade.vue'
+import CenterReviewData from '@/components/body/HomeCenterData/CenterReviewData.vue'
+import CenterStatusGraph from '@/components/body/HomeCenterData/CenterStatusGraph.vue'
 
 export default {
   components: {CenterBasicInfo, CenterDetailInfo, CenterEvalGrade, CenterReviewData, CenterStatusGraph},

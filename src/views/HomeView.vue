@@ -22,9 +22,9 @@
 </template>
 
 <script>
-import HomeCenterDataLayout from '@/components/layout/HomeCenterDataLayout.vue';
-import HomeContentsLayout from '@/components/layout/HomeContentsLayout.vue';
-import HomeSideLayout from '@/components/layout/HomeSideLayout.vue';
+import HomeCenterDataLayout from '@/components/layout/Home/HomeCenterDataLayout.vue';
+import HomeContentsLayout from '@/components/layout/Home/HomeContentsLayout.vue';
+import HomeSideLayout from '@/components/layout/Home/HomeSideLayout.vue';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
