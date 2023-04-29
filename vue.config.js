@@ -10,7 +10,9 @@ module.exports = {
           '^/api': '/api/notice/basicInfo.do'
         },
       },
-    }
+    },
+    // 포트 번호 고정
+    port: 8079
   },
   transpileDependencies: true,
 

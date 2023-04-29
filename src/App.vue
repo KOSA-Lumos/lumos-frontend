@@ -1,32 +1,26 @@
 <template>
   <v-app>
-    <button @click="goToChild">라우터 띄우기</button>
-    <button @click="main123">메인123라우터 띄우기</button>
-    <router-view></router-view>
-    <mainPageFooter></mainPageFooter>
+
+    <div  style="min-height: calc(100vh - 92px)">
+      <router-view />
+    </div>
+    <div style="height: 92px">
+      <footer-main />
+    </div>
+
   </v-app>
 </template>
 
 <script>
-import mainPageFooter from './components/footer/mainPageFooter.vue';
+import FooterMain from './components/footer/FooterMain.vue';
 
 export default {
   name: 'app',
   components: {
-    mainPageFooter,
+    FooterMain,
   },
   methods: {
-    goToChild() {
-      this.$router.push('/child');
-    },
-    main123() {
-      this.$router.push('/mainPage123');
-    },
+    
   },
 };
 </script>
-
-
-<style scoped>
-
-</style>
