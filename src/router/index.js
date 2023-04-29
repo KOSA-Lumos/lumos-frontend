@@ -21,6 +21,10 @@ const routes = [
     path: '/',
     component: HomeView
   },
+  {
+    path: '/login',
+    component: () => import(/**/ '../views/LoginView.vue')
+  },
 
   // 아래는 git 통합 이전 라우터 설정
   // {

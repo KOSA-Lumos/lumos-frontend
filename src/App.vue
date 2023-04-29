@@ -1,27 +1,26 @@
 <template>
   <v-app>
 
-    <router-view />
-    <footer-layout />
+    <div  style="min-height: calc(100vh - 92px)">
+      <router-view />
+    </div>
+    <div style="height: 92px">
+      <footer-main />
+    </div>
 
   </v-app>
 </template>
 
 <script>
-import FooterLayout from './components/layout/FooterLayout.vue';
+import FooterMain from './components/footer/FooterMain.vue';
 
 export default {
   name: 'app',
   components: {
-    FooterLayout,
+    FooterMain,
   },
   methods: {
-    // goToChild() {
-    //   this.$router.push('/child');
-    // },
-    // main123() {
-    //   this.$router.push('/mainPage123');
-    // },
+    
   },
 };
 </script>
