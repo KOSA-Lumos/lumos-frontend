@@ -25,6 +25,18 @@ const routes = [
     path: '/login',
     component: () => import(/**/ '../views/LoginView.vue')
   },
+  {
+    path: '/yunittest',
+    component: () => import(/**/ '../views/YunitTestView.vue')
+  },
+  {
+    path: '/jeongtest',
+    component: () => import(/**/ '../views/JeongTestView.vue')
+  },
+  {
+    path: '/hongtest',
+    component: () => import(/**/ '../views/HongTestView.vue')
+  },
 
   // 아래는 git 통합 이전 라우터 설정
   // {
