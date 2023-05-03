@@ -5,7 +5,8 @@
 
       <v-col class="text-center" cols="12">
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/')">Home</v-btn>
-        <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/login')">Login</v-btn>
+        <v-btn v-if="!loginUser" color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/login')">Login</v-btn>
+        <v-btn v-else color="white" variant="text" class="mx-2" rounded="xl" @click="logout">Logout</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/yunittest')">YunitTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/jeongtest')">JeongTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/hongtest')">HongTest</v-btn>
@@ -26,11 +27,22 @@ export default {
   data: () => ({
     
   }),
+  computed: {
+    loginUser(){
+      console.log("~~사용자인증 성공^ㅁ^~~");
+      return this.$store.getters.loginUser;
+
+    }
+  },
   
   methods: {
     moveTo (url) {
       console.log('@@ moveTo(' + url + ')')
       this.$router.push(`${url}`);
+    },
+    logout(){
+      this.$store.commit('logout');
+      this.$router.push('/');
     }
   }
 }
