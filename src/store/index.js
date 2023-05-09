@@ -1,5 +1,6 @@
 import { createStore } from 'vuex'
 import createPersistedState from 'vuex-persistedstate';
+import Centerinfo from '@/store/modules/Centerinfo.js';
 
 export default createStore({
   state: {
@@ -43,6 +44,7 @@ export default createStore({
   },
   
   modules: {
+    Centerinfo,
   },
   plugins: [ 
     createPersistedState({

@@ -1,11 +1,11 @@
 <template>
   <div>
-    <canvas ref="myChart"></canvas>
+    <canvas ref="myChart" style="height: 500px;"></canvas>
   </div>
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watch } from 'vue';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 
@@ -51,7 +51,7 @@ export default {
               ]
             },
             options: {
-              maintainAspectRatio: true,
+              maintainAspectRatio: false,
               responsive: true,
               scales: {
                 y: {
@@ -68,6 +68,9 @@ export default {
 
     onMounted(() => {
       getDetailData();
+    });
+
+    watch(() => {
     });
 
     return { myChart };

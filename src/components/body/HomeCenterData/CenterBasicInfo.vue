@@ -31,6 +31,8 @@
 <script>
 import { reactive } from "vue";
 import axios from "axios";
+import { useStore } from 'vuex'; // Vuex store를 사용하기 위해 추가
+import Centerinfo from '../../../store/modules/Centerinfo.js'
 
 export default {
   setup() {
@@ -41,6 +43,8 @@ export default {
       testData: null,
     });
 
+    const store = useStore(); // Vuex store를 가져옴
+
     const getTestData = () => {
       axios
         .get(
@@ -48,6 +52,7 @@ export default {
         )
         .then((response) => {
           state.testData = response.data;
+          store.commit('Centerinfo/setNormalInfo', response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -59,8 +64,10 @@ export default {
     return {
       state,
       getTestData,
+      Centerinfo,
       testData: state.testData,
     };
   },
 };
+
 </script>
