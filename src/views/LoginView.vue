@@ -1,8 +1,8 @@
 <template>
   <v-app id="inspire">
     <v-main class="blue-grey lighten-4">
-      <v-container style="max-width: 450px" fill-height>
-        <v-layout align-center row wrap>
+      <v-container class="loginPage-container" fill-height>
+        <!-- <v-layout align-center row wrap> -->
           <v-flex xs12>
             <v-card>
               <div class="pa-10">
@@ -17,7 +17,7 @@
               </div>
             </v-card>
           </v-flex>
-        </v-layout>
+        <!-- </v-layout> -->
       </v-container>
     </v-main>
   </v-app>
@@ -137,7 +137,10 @@ export default {
 </script>
 
 <style scoped>
-
+.loginPage-container {
+  width: 500px;
+  margin-top:100px;
+}
 .kakaoLogin-button {
   width: 150px;
   height: 40px;
