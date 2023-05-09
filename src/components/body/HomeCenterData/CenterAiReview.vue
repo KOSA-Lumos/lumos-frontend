@@ -6,59 +6,34 @@
     <br />
     <div><v-btn @click="callNaverApp">Call Naver App</v-btn></div>
     <br />
-    <v-btn @click="callgptmealApp"
-      >네이버파파고 영어로 번역하고 gpt식단추천 App</v-btn
-    >
+    <v-textarea
+      bg-color="grey-lighten-2"
+      color="cyan"
+      label="(Naver) 검색어"
+      :readonly="true"
+    ></v-textarea>
+
+    <div v-for="item in data.Naverresponse.items" :key="item.cafeurl">
+      <p>{{ item.description }}</p>
+    </div>
+
+    <br />
+    <v-btn @click="googletransrateApp">구글번역테스트하기</v-btn>
     <v-dialog v-model="data.dialog" max-width="500">
       <v-card>
-        <v-card-title> 추천 식단 </v-card-title>
-        <v-card-text>
-          {{ data.mealresponse }}
-          {{ data.mealreplace }}
-          <!-- {{ responseData }} -->
-        </v-card-text>
+        <v-card-title> </v-card-title>
+        <v-card-text> {{ data.koreanText }} 번역 </v-card-text>
         <v-card-actions>
           <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
     <br />
-    <br />
-    <v-btn @click="googlemealApp">구글 영어로 번역하고 gpt식단추천 App</v-btn>
-    <v-dialog v-model="data.dialog" max-width="500">
-      <v-card>
-        <v-card-title> 추천 식단 </v-card-title>
-        <v-card-text>
-          <!-- {{ data.googlemealresponse }} -->
-          {{ data.koreanText }}
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <br />
-    <br />
-    <div><v-btn @click="googletransrateApp">구글번역테스트하기</v-btn></div>
     <br />
     <v-btn @click="kinderrecommendAPP">구글 번역 어린이집 추천 App</v-btn>
     <v-dialog v-model="data.dialog" max-width="500">
       <v-card>
-        <v-card-title> 어린이집 추천 </v-card-title>
-        <v-card-text>
-          {{ data.koreanText }}
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-    <br />
-    <br />
-    <v-btn @click="kinderemotionAPP">구글 번역 글들 감정분석 App</v-btn>
-    <v-dialog v-model="data.dialog" max-width="500">
-      <v-card>
-        <v-card-title> 감정분석 </v-card-title>
+        <v-card-title> </v-card-title>
         <v-card-text>
           {{ data.koreanText }}
         </v-card-text>
@@ -72,7 +47,7 @@
     <v-btn @click="kinderresourceAPP">구글 번역 어린이집고려할목록 App</v-btn>
     <v-dialog v-model="data.dialog" max-width="500">
       <v-card>
-        <v-card-title> 어린이집고려할목록 </v-card-title>
+        <v-card-title> </v-card-title>
         <v-card-text>
           {{ data.koreanText }}
         </v-card-text>
@@ -90,8 +65,10 @@ import { reactive } from "vue";
 export default {
   setup() {
     const data = reactive({
-      response: "",
+      response: {},
+      Naverresponse: {},
       mealresponse: "",
+      description: {},
       koreanText: "",
       dialog: false,
     });
@@ -128,8 +105,9 @@ export default {
           method: "POST",
         });
         const responseData = await response.json();
-        data.response = responseData;
+        data.Naverresponse = responseData;
         console.log(responseData);
+        console.log(data.Naverresponse);
       } catch (error) {
         console.error(error);
       }
@@ -184,9 +162,26 @@ export default {
 
     async function googletransrateApp() {
       try {
-        await fetch("http://localhost:5000/googletransrateAPI", {
-          method: "POST",
-        });
+        const googletransrate = await fetch(
+          "http://localhost:5000/googletransrateAPI",
+          {
+            method: "POST",
+          }
+        );
+        const responseData = await googletransrate.text();
+        data.dialog = true;
+        const decodedResponse = JSON.parse(responseData);
+        const decodedText = decodedResponse.result.translatedText;
+        data.googletransrate = decodedText;
+        if (typeof data.googletransrate !== "undefined") {
+          console.log(data.googletransrate + "+ 번역");
+          console.log(typeof data.googletransrate);
+        } else {
+          console.log("data.googletransrate is not defined.");
+        }
+        data.koreanText = data.googletransrate
+          .replace(/(^{|}$)/g, "")
+          .replace(/\\n/g, "\n");
       } catch (error) {
         console.error(error);
       }
@@ -214,35 +209,6 @@ export default {
         data.koreanText = data.kinderrecommend
           .replace(/(^{|}$)/g, "")
           .replace(/\\n/g, "\n");
-
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function kinderemotionAPP() {
-      try {
-        const kinderemotion = await fetch(
-          "http://localhost:5000/kinderemotionAPI",
-          {
-            method: "POST",
-          }
-        );
-        const responseData = await kinderemotion.text();
-        data.dialog = true;
-        const decodedResponse = JSON.parse(responseData);
-        const decodedText = decodedResponse.result.translatedText;
-        data.kinderemotion = decodedText;
-        if (typeof data.kinderemotion !== "undefined") {
-          console.log(data.kinderemotion);
-          console.log(typeof data.kinderemotion);
-        } else {
-          console.log("data.kinderemotion is not defined.");
-        }
-        data.koreanText = data.kinderemotion
-          .replace(/(^{|}$)/g, "")
-          .replace(/\\n/g, "\n");
-
       } catch (error) {
         console.error(error);
       }
@@ -270,12 +236,10 @@ export default {
         data.koreanText = data.kinderresource
           .replace(/(^{|}$)/g, "")
           .replace(/\\n/g, "\n");
-
       } catch (error) {
         console.error(error);
       }
     }
-
 
     return {
       data,
@@ -286,7 +250,6 @@ export default {
       googlemealApp,
       googletransrateApp,
       kinderrecommendAPP,
-      kinderemotionAPP,
       kinderresourceAPP,
     };
   },
