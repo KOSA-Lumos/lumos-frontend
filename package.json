@@ -15,6 +15,7 @@
     "express": "^4.18.2",
     "jquery": "3.6.4",
     "roboto-fontface": "*",
+    "validator": "^13.9.0",
     "vue": "^3.2.47",
     "vue-chartjs": "^5.2.0",
     "vue-router": "^4.0.3",
