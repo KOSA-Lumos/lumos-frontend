@@ -1,24 +1,6 @@
 <template>
   <div>
-    <div><v-btn @click="callEmotionApp">Call Emotion App</v-btn></div>
-    <br />
-    <div><v-btn @click="callGptApp">Call Gpt App</v-btn></div>
-    <br />
-    <div><v-btn @click="callNaverApp">Call Naver App</v-btn></div>
-    <br />
-    <v-textarea
-      bg-color="grey-lighten-2"
-      color="cyan"
-      label="(Naver) 검색어"
-      :readonly="true"
-    ></v-textarea>
-
-    <div v-for="item in data.Naverresponse.items" :key="item.cafeurl">
-      <p>{{ item.description }}</p>
-    </div>
-
-    <br />
-    <v-btn @click="googletransrateApp">구글번역테스트하기</v-btn>
+    <v-btn @click="googletransrateApp">(TEST) 구글번역테스트하기</v-btn>
     <v-dialog v-model="data.dialog" max-width="500">
       <v-card>
         <v-card-title> </v-card-title>
@@ -30,7 +12,31 @@
     </v-dialog>
     <br />
     <br />
-    <v-btn @click="kinderrecommendAPP">구글 번역 어린이집 추천 App</v-btn>
+    <div><v-btn @click="callGptApp">(TEST) Gpt App</v-btn></div>
+    <br />
+    <div>
+      <v-btn @click="callNaverApp"
+        >(TEST) Naver 카페검색하기 App v-card로 배치가능</v-btn
+      >
+    </div>
+    <br />
+    <div id="app">
+      <v-container>
+        <v-card
+          v-for="item in data.Naverresponse.items"
+          :key="item.cafeurl"
+          class="mb-3"
+        >
+          <v-card-text>
+            {{ item.description }}
+          </v-card-text>
+        </v-card>
+      </v-container>
+    </div>
+    <br />
+    <v-btn @click="kinderrecommendAPP">
+      (다른 페이지에 들어갈것)!! 구글 번역 어린이집 추천 App</v-btn
+    >
     <v-dialog v-model="data.dialog" max-width="500">
       <v-card>
         <v-card-title> </v-card-title>
@@ -44,18 +50,23 @@
     </v-dialog>
     <br />
     <br />
-    <v-btn @click="kinderresourceAPP">구글 번역 어린이집고려할목록 App</v-btn>
-    <v-dialog v-model="data.dialog" max-width="500">
-      <v-card>
-        <v-card-title> </v-card-title>
-        <v-card-text>
-          {{ data.koreanText }}
-        </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <br />
+    <div><v-btn @click="callEmotionApp">아마존 감정처리하기</v-btn></div>
+    <v-textarea
+      bg-color="grey-lighten-2"
+      color="cyan"
+      label="(Amazone)후기가 긍정적일까요 부정적일까요"
+      :readonly="true"
+    ></v-textarea>
+    <br />
+    <v-btn @click="kinderresourceAPP">어린이집 선택시 고려할 목록 App</v-btn>
+    <v-textarea
+      bg-color="grey-lighten-2"
+      color="cyan"
+      label="(GPT)어린이집 선택시 우선적으로 봐야할 목록"
+      :readonly="true"
+      v-model="data.koreanText"
+    ></v-textarea>
   </div>
 </template>
 

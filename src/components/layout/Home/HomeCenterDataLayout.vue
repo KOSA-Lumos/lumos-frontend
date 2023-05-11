@@ -11,7 +11,7 @@
         <v-tab :value="2">상세정보</v-tab>
         <v-tab :value="3">평가등급</v-tab>
         <v-tab :value="4">비교그래프</v-tab>
-        <v-tab :value="5">식단추천</v-tab>
+        <v-tab :value="5">어린이식단추천</v-tab>
         <v-tab :value="6">AI분석</v-tab>
       </v-tabs>
 
