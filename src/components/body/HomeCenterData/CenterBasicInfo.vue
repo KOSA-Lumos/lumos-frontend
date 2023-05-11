@@ -26,6 +26,7 @@
       </tbody>
     </v-table>
   </div>
+
 </template>
 
 <script>

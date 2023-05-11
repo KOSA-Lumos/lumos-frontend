@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-btn @click="callgptmealApp">네이버파파고 영어로 번역하고 gpt식단추천 App</v-btn>
+    <v-btn @click="callgptmealApp"
+      >네이버파파고(시연용) 영어로 번역하고 gpt식단추천 App</v-btn
+    >
     <br />
     <br />
     <v-textarea
@@ -12,7 +14,7 @@
     ></v-textarea>
     <br />
     <br />
-    <v-btn @click="googlemealApp">구글 영어로 번역하고 gpt식단추천 App</v-btn>
+    <v-btn @click="googlemealApp">구글(테스트용) 영어로 번역하고 gpt식단추천 App</v-btn>
     <br />
     <br />
     <v-textarea
@@ -44,22 +46,40 @@ export default {
         const mealresponse = await fetch("http://localhost:5000/gptmeal2API", {
           method: "POST",
         });
-        const responseData = await mealresponse.text(); // Response를 text로 변환
+        const responseData = await mealresponse.text();
         data.dialog = true;
-        data.mealresponse = responseData;
-        data.mealreplace = data.mealresponse;
-        
-        const navermealresponse = JSON.parse(responseData);
-        const decodedText = navermealresponse.result.translatedText;
-        data.navermealresponse = decodedText;
-        data.naverkoreanText = data.navermealresponse
-                  .replace(/(^{|}$)/g, "")
+        const decodedResponse = JSON.parse(responseData);
+        const decodedText = decodedResponse.result.translatedText;
+        data.mealresponse = decodedText;
+        if (typeof data.mealresponse !== "undefined") {
+          console.log(data.mealresponse);
+          console.log(typeof data.mealresponse);
+        } else {
+          console.log("data.mealresponse is not defined.");
+        }
+        data.koreanText = data.mealresponse
+          .replace(/(^{|}$)/g, "")
           .replace(/\\n/g, "\n");
-
-        // console.log(data.mealreplace);
       } catch (error) {
         console.error(error);
       }
+
+      //   const responseData = await mealresponse.text(); // Response를 text로 변환
+      //   data.dialog = true;
+      //   data.mealresponse = responseData;
+      //   data.mealreplace = data.mealresponse;
+
+      //   const navermealresponse = JSON.parse(responseData);
+      //   const decodedText = navermealresponse.result.translatedText;
+      //   data.navermealresponse = decodedText;
+      //   data.naverkoreanText = data.navermealresponse
+      //             .replace(/(^{|}$)/g, "")
+      //     .replace(/\\n/g, "\n");
+
+      //   // console.log(data.mealreplace);
+      // } catch (error) {
+      //   console.error(error);
+      // }
     }
 
     async function googlemealApp() {
@@ -84,11 +104,6 @@ export default {
         data.koreanText = data.googlemealresponse
           .replace(/(^{|}$)/g, "")
           .replace(/\\n/g, "\n");
-
-        // data.koreanText = decodeURIComponent(JSON.parse(decodedText));
-        // console.log(data.koreanText);
-        // data.koreanText.replace(/(^{|\}$)/g, '') // {와 } 제거
-        // .replace(/\\n\\n/g, '\n\n'); // \n\n이 나올 때마다 엔터 삽입
       } catch (error) {
         console.error(error);
       }

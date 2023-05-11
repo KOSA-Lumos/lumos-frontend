@@ -10,6 +10,9 @@
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/yunittest')">YunitTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/jeongtest')">JeongTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/hongtest')">HongTest</v-btn>
+            <!-- ShareThis BEGIN -->
+  <div class="sharethis-inline-share-buttons"></div>
+  <!-- ShareThis END -->
       </v-col>
 
       <v-col class="text-center mt-4" cols="12">

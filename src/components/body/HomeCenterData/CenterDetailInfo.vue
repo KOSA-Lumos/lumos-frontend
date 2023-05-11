@@ -124,6 +124,9 @@
   <div id="app">
     <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
   </div>
+  <!-- ShareThis BEGIN -->
+  <div class="sharethis-inline-share-buttons"></div>
+  <!-- ShareThis END -->
 </template>
 
 
