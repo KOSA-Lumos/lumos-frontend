@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>위치 설정하기</h1>
+    <v-btn @click="apicalltest()">api테스트</v-btn>
 
     <v-row>
       <v-col cols="9">
@@ -69,7 +70,24 @@ export default {
     displayClickedCenterDetail(scdCenter) {
       // console.log("@@ displayClickedCenterDetail 실행");
       this.$store.dispatch('setClickedCenter', scdCenter);
-    }
+    },
+    // 유치원 API 호출 테스트
+    apicalltest() {
+      console.log("@@ apicalltest 실행");
+
+      let serverUrl = process.env.VUE_APP_SERVER_URL;
+      this.$axios
+        .get(
+          `${serverUrl}/searchMap/apicalltest/10`
+        )
+        .then((response) => {
+          console.log("@@@ axios 성공", response);
+        })
+        .catch((error) => {
+          console.log("@@@ axios 실패");
+          console.log(error);
+        });
+    },
   }
 }
 </script>
