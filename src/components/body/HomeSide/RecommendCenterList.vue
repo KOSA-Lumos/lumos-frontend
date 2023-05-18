@@ -78,10 +78,11 @@ export default {
       let serverUrl = process.env.VUE_APP_SERVER_URL;
       this.$axios
         .get(
-          `${serverUrl}/searchMap/apicalltest/10`
+          // `${serverUrl}/searchMap/apicalltest/kinder/1`
+          `${serverUrl}/searchMap/apicalltest/kakao/1`
         )
         .then((response) => {
-          console.log("@@@ axios 성공", response);
+          console.log("@@@ axios 성공\n", response);
         })
         .catch((error) => {
           console.log("@@@ axios 실패");
