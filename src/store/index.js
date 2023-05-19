@@ -13,6 +13,9 @@ export default createStore({
     searchedCenters: [],
     clickedCenter: {},
 
+    // Map
+    clickPosition: [],
+
   },
   getters: {
 
@@ -41,6 +44,11 @@ export default createStore({
       return state.clickedCenter;
     },
 
+    // Map
+    getClickPosition(state) {
+      return state.clickPosition;
+    },
+
   },
   mutations: {
 
@@ -66,6 +74,12 @@ export default createStore({
       state.clickedCenter = newClickedCenter;
     },
 
+    // Map
+    mutSetClickPosition(state, newClickPosition) {
+      console.log("@@@@ mutSetClickPosition 실행\n", state.clickPosition, newClickPosition);
+      state.clickPosition = newClickPosition;
+    },
+
   },
   actions: {
 
@@ -80,6 +94,11 @@ export default createStore({
     },
     setClickedCenter({ commit }, newClickedCenter) {
       commit("mutSetClickedCenter", newClickedCenter);
+    },
+
+    // Map
+    setClickPosition({ commit }, newClickPosition) {
+      commit("mutSetClickPosition", newClickPosition);
     },
 
   },
