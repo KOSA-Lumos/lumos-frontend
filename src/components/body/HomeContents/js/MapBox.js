@@ -1,11 +1,12 @@
 export default {
   computed: {
+    recommendedCenters() {
+      return this.$store.getters.getRecommendedCenters;
+    },
     searchedCenters() {
-      // console.log("@@@ computed-searchedCentersVuex 실행");
       return this.$store.getters.getSearchedCenters;
     },
     clickPosition() {
-      // console.log("@@@ computed-searchedCentersVuex 실행");
       return this.$store.getters.getClickPosition;
     },
   },
@@ -13,7 +14,7 @@ export default {
     return {
       markers: [],
       yMarkers: [],
-      infowindow: null // 인포윈도우를 저장할 변수
+      // infowindow: null // 인포윈도우를 저장할 변수
     };
   },
   mounted() {
@@ -68,6 +69,46 @@ export default {
         let yMarkerPositions = [];
         yMarkerPositions.push([latlng.getLat(), latlng.getLng()]);
         this.displayYellowMarker(yMarkerPositions);
+
+        // 시도-시군구 데이터 가져와서 Vuex에 저장하기(api호출 없이)
+        // // geocoder : 주소-좌표 변환하는 객체
+        let geocoder = new kakao.maps.services.Geocoder();
+        function searchDetailAddrFromCoords(coords, callback) {
+          // 좌표로 법정동 상세 주소 정보를 요청합니다
+          geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+        }
+        searchDetailAddrFromCoords(mouseEvent.latLng, (result, status) => {
+          console.log(result, status);
+          if (status === kakao.maps.services.Status.OK) {
+            let addressState = result[0].address.region_1depth_name;
+            let addressCity = result[0].address.region_2depth_name;
+            
+            // City 데이터에서 공백 제거하기
+            addressCity = addressCity.replace(/\s/g, "");
+
+            if (addressState === "서울") {
+              addressState = addressState + "특별시";
+            } else if (addressState === "인천" || addressState === "대전" || addressState === "대구") {
+              addressState = addressState + "광역시";
+            } else if (addressState === "경기" || addressState === "강원") {
+              addressState = addressState + "도";
+            } else if (addressState === "충남") {
+              addressState = "충청남도";
+            } else if (addressState === "충북") {
+              addressState = "충청북도";
+            } else if (addressState === "경남") {
+              addressState = "경상남도";
+            } else if (addressState === "경북") {
+              addressState = "경상북도";
+            } else if (addressState === "세종특별자치시") {
+              addressCity = "세종특별자치시";
+            }
+            this.$store.dispatch('setClickAddress', result[0].address.address_name);
+            this.$store.dispatch('setClickAddressState', addressState);
+            this.$store.dispatch('setClickAddressCity', addressCity);
+
+          }   
+        });
       });
     },
     // setupInfoWindow() {
@@ -186,8 +227,22 @@ export default {
     },
   },
   watch: {
+    recommendedCenters(newVal, oldVal) {
+      console.log("@@@ watch-recommendedCenters 실행\n", oldVal, newVal);
+
+      // 마커 정보 저장하고 지도에 출력
+      let positions = [];
+      for (let i = 0; i < newVal.length; i++) {
+        positions.push([newVal[i].centerDetailLatitude,
+          newVal[i].centerDetailLongitude]);
+      }
+      this.displayMarker(positions);
+
+      // 마커마다 센터 번호 저장하고, 클릭하면 상세정보 보기
+
+    },
     searchedCenters(newVal, oldVal) {
-      console.log("@@@ watch-searchedCenters 실행", newVal, oldVal);
+      console.log("@@@ watch-searchedCenters 실행\n", oldVal, newVal);
 
       // 마커 정보 저장하고 지도에 출력
       let positions = [];
