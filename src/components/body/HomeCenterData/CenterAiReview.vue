@@ -1,22 +1,33 @@
 <template>
   <div>
-    <v-btn @click="googletransrateApp">(TEST) 구글번역테스트하기</v-btn>
-    <v-dialog v-model="data.dialog" max-width="500">
-      <v-card>
-        <v-card-title> </v-card-title>
-        <v-card-text> {{ data.koreanText }} 번역 </v-card-text>
-        <v-card-actions>
-          <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
+    <v-btn @click="googletransrateApp">(삭제할버튼) 구글번역테스트하기</v-btn>
     <br />
     <br />
-    <div><v-btn @click="callGptApp">(TEST) Gpt App</v-btn></div>
+    <div><v-btn @click="callEmotionApp">어린이집 후기 분석</v-btn></div>
+    <br>
+    <v-textarea
+      bg-color="grey-lighten-5"
+      color="cyan"
+      label="(Amazone)후기가 긍정적일까요 부정적일까요"
+      :readonly="true"
+      rows="15"
+    ></v-textarea>
     <br />
-    <div>
+    <div><v-btn @click="kinderresourceAPP">어린이집 선택하기 어려우면 클릭하세요!!</v-btn></div>
+    <br>
+    <v-textarea
+      bg-color="grey-lighten-5"
+      color="cyan"
+      label="(GPT) 어린이집 선택시 고려할 목록"
+      :readonly="true"
+      rows="15"
+      v-model="data.koreanText"
+    ></v-textarea>
+  </div>
+
+  <div>
       <v-btn @click="callNaverApp"
-        >(TEST) Naver 카페검색하기 App v-card로 배치가능</v-btn
+        >(시연용) Naver 카페검색하기 App v-card로 배치가능</v-btn
       >
     </div>
     <br />
@@ -33,41 +44,23 @@
         </v-card>
       </v-container>
     </div>
-    <br />
-    <v-btn @click="kinderrecommendAPP">
-      (다른 페이지에 들어갈것)!! 구글 번역 어린이집 추천 App</v-btn
-    >
-    <v-dialog v-model="data.dialog" max-width="500">
-      <v-card>
-        <v-card-title> </v-card-title>
-        <v-card-text>
-          {{ data.koreanText }}
+
+    <v-dialog v-model="data.loading" persistent width="400" height="600">
+      <v-card color="white" dark>
+        <v-card-text class="text-center">
+          <span class="text-body-2">AI 응답 대기중!!</span>
+          <v-progress-circular
+            indeterminate
+            color="yellow"
+          ></v-progress-circular>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" text @click="data.dialog = false">닫기</v-btn>
+          <v-btn color="black" block @click="data.loading = false"
+            >로딩창 끄기</v-btn
+          >
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <br />
-    <br />
-    <br />
-    <div><v-btn @click="callEmotionApp">아마존 감정처리하기</v-btn></div>
-    <v-textarea
-      bg-color="grey-lighten-2"
-      color="cyan"
-      label="(Amazone)후기가 긍정적일까요 부정적일까요"
-      :readonly="true"
-    ></v-textarea>
-    <br />
-    <v-btn @click="kinderresourceAPP">어린이집 선택시 고려할 목록 App</v-btn>
-    <v-textarea
-      bg-color="grey-lighten-2"
-      color="cyan"
-      label="(GPT)어린이집 선택시 우선적으로 봐야할 목록"
-      :readonly="true"
-      v-model="data.koreanText"
-    ></v-textarea>
-  </div>
 </template>
 
 <script>
@@ -81,65 +74,82 @@ export default {
       mealresponse: "",
       description: {},
       koreanText: "",
+      loading: false,
       dialog: false,
     });
 
     async function callEmotionApp() {
+      data.loading = true
       try {
         const response = await fetch("http://localhost:5000/emotionApi", {
           method: "POST",
         });
         const responseData = await response.json();
+        
         data.response = responseData;
+        data.loading = false
         console.log(responseData);
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
     async function callGptApp() {
+      data.loading = true
       try {
         const response = await fetch("http://localhost:5000/gptApi", {
           method: "POST",
         });
         const responseData = await response.json();
+        
         data.response = responseData;
+        data.loading = false
         console.log(responseData);
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
     async function callNaverApp() {
+      data.loading = true
       try {
         const response = await fetch("http://localhost:5000/naverApi", {
           method: "POST",
         });
         const responseData = await response.json();
-        data.Naverresponse = responseData;
+        
+        data.Naverresponse = responseData
+        data.loading = false
         console.log(responseData);
         console.log(data.Naverresponse);
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
     async function callgptmealApp() {
+      data.loading = true;
       try {
         const mealresponse = await fetch("http://localhost:5000/gptmeal2API", {
           method: "POST",
         });
         const responseData = await mealresponse.text(); // Response를 text로 변환
-        data.dialog = true;
+        
         data.mealresponse = responseData;
         data.mealreplace = data.mealresponse;
+        data.loading = false
         // console.log(data.mealreplace);
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
     async function googlemealApp() {
+      data.loading = true;
       try {
         const googlemealresponse = await fetch(
           "http://localhost:5000/googlemealAPI",
@@ -148,7 +158,7 @@ export default {
           }
         );
         const responseData = await googlemealresponse.text();
-        data.dialog = true;
+        
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.googlemealresponse = decodedText;
@@ -158,20 +168,24 @@ export default {
         } else {
           console.log("data.googlemealresponse is not defined.");
         }
+        data.loading = false
         data.koreanText = data.googlemealresponse
           .replace(/(^{|}$)/g, "")
-          .replace(/\\n/g, "\n");
+          .replace(/"/, "")
+          .replace(/\\ n/g, "\n");
 
         // data.koreanText = decodeURIComponent(JSON.parse(decodedText));
         // console.log(data.koreanText);
         // data.koreanText.replace(/(^{|\}$)/g, '') // {와 } 제거
         // .replace(/\\n\\n/g, '\n\n'); // \n\n이 나올 때마다 엔터 삽입
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
     async function googletransrateApp() {
+      data.loading = true;
       try {
         const googletransrate = await fetch(
           "http://localhost:5000/googletransrateAPI",
@@ -180,7 +194,7 @@ export default {
           }
         );
         const responseData = await googletransrate.text();
-        data.dialog = true;
+        
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.googletransrate = decodedText;
@@ -190,42 +204,19 @@ export default {
         } else {
           console.log("data.googletransrate is not defined.");
         }
+        data.loading = false
         data.koreanText = data.googletransrate
           .replace(/(^{|}$)/g, "")
-          .replace(/\\n/g, "\n");
+          .replace(/"/, "")
+          .replace(/\\ n/g, "\n");
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
 
-    async function kinderrecommendAPP() {
-      try {
-        const kinderrecommend = await fetch(
-          "http://localhost:5000/kinderrecommendAPI",
-          {
-            method: "POST",
-          }
-        );
-        const responseData = await kinderrecommend.text();
-        data.dialog = true;
-        const decodedResponse = JSON.parse(responseData);
-        const decodedText = decodedResponse.result.translatedText;
-        data.kinderrecommend = decodedText;
-        if (typeof data.kinderrecommend !== "undefined") {
-          console.log(data.kinderrecommend);
-          console.log(typeof data.kinderrecommend);
-        } else {
-          console.log("data.kinderrecommend is not defined.");
-        }
-        data.koreanText = data.kinderrecommend
-          .replace(/(^{|}$)/g, "")
-          .replace(/\\n/g, "\n");
-      } catch (error) {
-        console.error(error);
-      }
-    }
-
-    async function kinderresourceAPP() {
+async function kinderresourceAPP() {
+  data.loading = true;
       try {
         const kinderresource = await fetch(
           "http://localhost:5000/kinderresourceAPI",
@@ -234,7 +225,7 @@ export default {
           }
         );
         const responseData = await kinderresource.text();
-        data.dialog = true;
+        
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.kinderresource = decodedText;
@@ -244,10 +235,13 @@ export default {
         } else {
           console.log("data.kinderresource is not defined.");
         }
+        data.loading = false
         data.koreanText = data.kinderresource
           .replace(/(^{|}$)/g, "")
-          .replace(/\\n/g, "\n");
+          .replace(/"/, "")
+          .replace(/\\ n/g, "\n");
       } catch (error) {
+        data.loading = false
         console.error(error);
       }
     }
@@ -260,7 +254,6 @@ export default {
       callgptmealApp,
       googlemealApp,
       googletransrateApp,
-      kinderrecommendAPP,
       kinderresourceAPP,
     };
   },

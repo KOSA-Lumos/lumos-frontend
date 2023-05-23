@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, watch } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 
@@ -30,11 +30,11 @@ export default {
           new Chart(ctx, {
             type: 'bar',
             data: {
-              labels: ['방 개수', '선생님', '놀이터개수', '정원', '현원'],
+              labels: ['방 개수', '선생님 수', '놀이터 개수(1/10)', '정원', '현원'],
               datasets: [
                 {
                   label: '전체 평균',
-                  data: [4.8, 9.7, 0.65, 48.8, 32],
+                  data: [4.8, 9.7, 6.5, 48.8, 32],
                   borderWidth: 1
                 },
                 {
@@ -42,7 +42,7 @@ export default {
                   data: [
                     state.testData.center_detail_roomcount,
                     state.testData.center_detail_teachercount,
-                    state.testData.center_detail_playgroundcount,
+                    state.testData.center_detail_playgroundcount * 10,
                     state.testData.center_detail_regularperson,
                     state.testData.center_detail_currentperson,
                   ],
@@ -68,9 +68,6 @@ export default {
 
     onMounted(() => {
       getDetailData();
-    });
-
-    watch(() => {
     });
 
     return { myChart };
