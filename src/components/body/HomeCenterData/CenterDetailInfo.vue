@@ -1,25 +1,25 @@
 <template>
   <div v-if="state.testData">
-    <v-table>
+    <v-table density="compact">
       <tbody>
         <tr>
           <th>센터번호</th>
           <td>{{ state.testData.center_num }}</td>
         </tr>
         <tr>
-          <th>어린이집유치원명</th>
+          <th>어린이집/유치원명</th>
           <td>{{ state.testData.center_detail_name }}</td>
         </tr>
         <tr>
-          <th>시도</th>
+          <th>시, 도</th>
           <td>{{ state.testData.center_detail_state }}</td>
         </tr>
         <tr>
-          <th>시군구</th>
+          <th>시, 군, 구</th>
           <td>{{ state.testData.center_detail_city }}</td>
         </tr>
         <tr>
-          <th>유형</th>
+          <th>국공립, 민간, 직장</th>
           <td>{{ state.testData.center_detail_classification }}</td>
         </tr>
         <tr>
@@ -27,7 +27,7 @@
           <td>{{ state.testData.center_detail_centeropen }}</td>
         </tr>
         <tr>
-          <th>교육청전화번호</th>
+          <th>교육청센터번호</th>
           <td>{{ state.testData.center_detail_officenumber }}</td>
         </tr>
         <tr>
@@ -80,8 +80,13 @@
         </tr>
         <tr>
           <th>홈페이지주소</th>
-          <td>{{ state.testData.center_detail_hompage }}</td>
+          <td>
+            <a v-bind:href="state.testData.center_detail_hompage" target="_blank">{{
+              state.testData.center_detail_hompage
+            }}</a>
+          </td>
         </tr>
+
         <tr>
           <th>설립일자</th>
           <td>{{ state.testData.center_detail_establish }}</td>
@@ -92,7 +97,7 @@
   <br />
   <div>
     <!-- <v-btn @click="getData">유치원 데이터 가져오기</v-btn> -->
-    <v-row v-if="data.kinderInfo">
+    <!-- <v-row v-if="data.kinderInfo">
       <v-col cols="12">
         <ul v-if="data.kinderInfo.length > 0">
           <li>주소: {{ data.kinderInfo[0].addr }}</li>
@@ -118,15 +123,12 @@
           <li>교육지원청명: {{ data.kinderInfo[0].subofficeedu }}</li>
         </ul>
       </v-col>
-    </v-row>
+    </v-row> -->
   </div>
   <br />
-  <div id="app">
+  <div id="kakaoshare" class="text-center">
     <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
   </div>
-  <!-- ShareThis BEGIN -->
-  <div class="sharethis-inline-share-buttons"></div>
-  <!-- ShareThis END -->
 </template>
 
 
@@ -163,7 +165,6 @@ export default {
         .get(`${serverUrl}/kindergartendetail/${state.center_num}/detail`)
         .then((response) => {
           state.testData = response.data;
-          console.log(state.testData);
         })
         .catch((error) => {
           console.log(error);
@@ -179,8 +180,6 @@ export default {
         )
         .then((response) => {
           data.kinderInfo = response.data.kinderInfo;
-          console.log("됨");
-          console.log(response.data.kinderInfo);
         })
         .catch((error) => {
           console.log(error);
@@ -202,19 +201,20 @@ export default {
 </script>
 
 <style scored>
-* {
-  margin: 0;
-  padding: 0;
+#kakaoshare {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .kakao-share {
   width: 150px;
   height: 100px;
-  line-height: 50px;
+  line-height: 20px;
   color: black;
   text-align: center;
   background: #ffe812;
-  font-size: 12px;
+  font-size: 15px;
   cursor: pointer;
 }
 </style>

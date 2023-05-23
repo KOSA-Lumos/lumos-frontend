@@ -4,10 +4,10 @@
       <thead>
         <tr>
           <th>센터번호</th>
-          <th>어린이집유치원명</th>
-          <th>어린이집유치원여부</th>
-          <th>시도</th>
-          <th>시군구</th>
+          <th>어린이집/유치원명</th>
+          <th>어린이집/유치원</th>
+          <th>시, 도</th>
+          <th>시, 군, 구</th>
           <th>설립유형</th>
           <th>연장보육여부</th>
         </tr>
@@ -32,8 +32,6 @@
 <script>
 import { reactive } from "vue";
 import axios from "axios";
-import { useStore } from 'vuex'; // Vuex store를 사용하기 위해 추가
-import Centerinfo from '../../../store/modules/Centerinfo.js'
 
 export default {
   setup() {
@@ -44,8 +42,6 @@ export default {
       testData: null,
     });
 
-    const store = useStore(); // Vuex store를 가져옴
-
     const getTestData = () => {
       axios
         .get(
@@ -53,7 +49,6 @@ export default {
         )
         .then((response) => {
           state.testData = response.data;
-          store.commit('Centerinfo/setNormalInfo', response.data);
         })
         .catch((error) => {
           console.log(error);
@@ -65,10 +60,47 @@ export default {
     return {
       state,
       getTestData,
-      Centerinfo,
       testData: state.testData,
     };
   },
 };
 
 </script>
+
+
+// vuestore에서 usernumber갖고오기
+// import { reactive, computed } from "vue";
+// import axios from "axios";
+// import { useStore } from "vuex"; // Import the useStore function from vuex
+
+// export default {
+//   setup() {
+//     var serverUrl = process.env.VUE_APP_SERVER_URL;
+
+//     const store = useStore(); // Access the Vuex store
+
+//     const state = reactive({
+//       testData: null,
+//     });
+
+//     const getTestData = () => {
+//       axios
+//         .get(`${serverUrl}/kindergartendetail/${store.state.center_num}/information`) // Use store.state.center_num instead of state.center_num
+//         .then((response) => {
+//           state.testData = response.data;
+//         })
+//         .catch((error) => {
+//           console.log(error);
+//         });
+//     };
+
+//     getTestData();
+
+//     return {
+//       state,
+//       getTestData,
+//       testData: state.testData,
+//     };
+//   },
+// };
+
