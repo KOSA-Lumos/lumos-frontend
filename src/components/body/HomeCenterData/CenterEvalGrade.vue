@@ -3,13 +3,13 @@
     <v-table v-if="state.testData">
       <thead>
         <tr>
-          <th>어린이집명</th>
+          <th>상호명</th>
           <th>등급</th>
           <th>보육과정 및 상호작용</th>
           <th>보육환경 및 운영관리</th>
-          <th>건강·안전</th>
+          <th>건강 및 안전</th>
           <th>교직원</th>
-          <th>평가일자</th>
+          <th>평가 년.월</th>
         </tr>
       </thead>
       <tbody>
@@ -52,7 +52,6 @@ export default {
           `${serverUrl}/kindergartendetail/${state.center_num}/grade`
         );
         state.testData = response.data;
-        console.log(state.testData);
         getScoreByGrade();
         getCommunication();
         getEnvironment();
