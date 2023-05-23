@@ -32,7 +32,8 @@ export default {
   }),
   computed: {
     loginUser(){
-      console.log("~~사용자인증 성공^ㅁ^~~");
+      console.log("~~로그인 유무 확인~~");
+      console.log(this.$store.getters.loginUser);
       return this.$store.getters.loginUser;
 
     }

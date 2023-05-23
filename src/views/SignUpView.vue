@@ -94,7 +94,6 @@ export default {
     
     var serverUrl = process.env.VUE_APP_SERVER_URL;
     function submit(){
-      // var serverUrl = process.env.VUE_APP_SERVER_URL;
       if (!userIdRules.every(rule => rule(signUpData.userId, null))) {
         console.log(signUpData.userId)
         alert("아이디를 입력해주세요.");

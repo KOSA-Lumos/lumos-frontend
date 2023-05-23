@@ -1,13 +1,4 @@
 <template>
-  <!-- <v-table class="userList"> -->
-    <!-- <div class="row">
-      <div class="col-md-6">
-        <input type="text" class="form-control" v-model="keyword" placeholder="검색어를 입력하세요">
-      </div>
-      <div class="col-md-2">
-        <button class="btn btn-primary" @click="userSearch">검색</button>
-      </div>
-    </div> -->
  <div class="row justify-content-center">
     <div class="col-md-6 search-field">
     <v-text-field

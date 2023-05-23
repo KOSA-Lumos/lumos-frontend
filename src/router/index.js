@@ -41,6 +41,10 @@ const routes = [
     path: '/hongtest',
     component: () => import(/**/ '../views/HongTestView.vue')
   },
+  // {
+  //   path: '/admin',
+  //   component: () => import(/**/ '../views/AdminPage.vue')
+  // },
 
   // 아래는 git 통합 이전 라우터 설정
   // {

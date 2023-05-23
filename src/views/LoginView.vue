@@ -93,23 +93,33 @@ export default {
       userId : '',
       userPw : ''
     })
-      const userId ='';
-      const userPw ='';
+      // const userId ='';
+      // const userPw ='';
 
     function login(){
       var serverUrl = process.env.VUE_APP_SERVER_URL;
       console.log(loginData.userId)
       axios.get(`${serverUrl}/user/login`,{
         params : {
-          userId : userId,
-          userPw : userPw
+          userId : loginData.userId,
+          userPw : loginData.userPw
         },
       })
       .then((res)=>{
-        store.getters.changeLoginUser;
-        console.log("~~로그인 성공^ㅁ^~~");
-        console.log(res);
-        router.push('/')
+        if (res.data == "") {
+          console("유저없음")
+          // alert("존재하지 않는 회원입니다.");
+        } else {
+          store.getters.changeLoginUser;
+          console.log("~~로그인 성공^ㅁ^~~");
+          console.log(res);
+        }
+        if (res.data.adminYn == "Y") { 
+          router.push('/hongtest'); 
+        } else { 
+          router.push('/'); 
+        }
+         
       })
       .catch((err)=>{
         console.log("~~로그인 실패-ㅁ-~~");
