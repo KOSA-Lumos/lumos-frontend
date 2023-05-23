@@ -10,8 +10,15 @@ export default createStore({
     loginUser : false,
 
     // Center
+    recommendedCenters: [],
     searchedCenters: [],
     clickedCenter: {},
+
+    // Map
+    clickPosition: [],
+    clickAddress: "",
+    clickAddressState: "",
+    clickAddressCity: "",
 
   },
   getters: {
@@ -34,11 +41,28 @@ export default createStore({
     },
 
     // Center
+    getRecommendedCenters(state) {
+      return state.recommendedCenters;
+    },
     getSearchedCenters(state) {
       return state.searchedCenters;
     },
     getClickedCenter(state) {
       return state.clickedCenter;
+    },
+
+    // Map
+    getClickPosition(state) {
+      return state.clickPosition;
+    },
+    getClickAddress(state) {
+      return state.clickAddress;
+    },
+    getClickAddressState(state) {
+      return state.clickAddressState;
+    },
+    getClickAddressCity(state) {
+      return state.clickAddressCity;
     },
 
   },
@@ -58,12 +82,30 @@ export default createStore({
     },
 
     // Center
+    mutSetRecommendedCenters(state, newRecommendedCenters) {
+      state.recommendedCenters = newRecommendedCenters;
+    },
     mutSetSearchedCenters(state, newSearchedCenters) {
       state.searchedCenters = newSearchedCenters;
     },
     mutSetClickedCenter(state, newClickedCenter) {
-      console.log("@@@@ vuex-mutSetClickedCenter 실행\n", newClickedCenter);
+      console.log("@@@@ mutSetClickedCenter 실행\n", newClickedCenter);
       state.clickedCenter = newClickedCenter;
+    },
+
+    // Map
+    mutSetClickPosition(state, newClickPosition) {
+      console.log("@@@@ mutSetClickPosition 실행\n", newClickPosition);
+      state.clickPosition = newClickPosition;
+    },
+    mutSetClickAddress(state, newClickAddress) {
+      state.clickAddress = newClickAddress;
+    },
+    mutSetClickAddressState(state, newClickAddressState) {
+      state.clickAddressState = newClickAddressState;
+    },
+    mutSetClickAddressCity(state, newClickAddressCity) {
+      state.clickAddressCity = newClickAddressCity;
     },
 
   },
@@ -75,11 +117,28 @@ export default createStore({
     },
 
     // Center
+    setRecommendedCenters({ commit }, newRecommendedCenters) {
+      commit("mutSetRecommendedCenters", newRecommendedCenters);
+    },
     setSearchedCenters({ commit }, newSearchedCenters) {
       commit("mutSetSearchedCenters", newSearchedCenters);
     },
     setClickedCenter({ commit }, newClickedCenter) {
       commit("mutSetClickedCenter", newClickedCenter);
+    },
+
+    // Map
+    setClickPosition({ commit }, newClickPosition) {
+      commit("mutSetClickPosition", newClickPosition);
+    },
+    setClickAddress({ commit }, newClickAddress) {
+      commit("mutSetClickAddress", newClickAddress);
+    },
+    setClickAddressState({ commit }, newClickAddressState) {
+      commit("mutSetClickAddressState", newClickAddressState);
+    },
+    setClickAddressCity({ commit }, newClickAddressCity) {
+      commit("mutSetClickAddressCity", newClickAddressCity);
     },
 
   },
