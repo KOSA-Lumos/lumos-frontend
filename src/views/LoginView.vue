@@ -111,6 +111,7 @@ export default {
           // alert("존재하지 않는 회원입니다.");
         } else {
           store.getters.changeLoginUser;
+          store.dispatch('setUserId', res.data.userId)
           console.log("~~로그인 성공^ㅁ^~~");
           console.log(res);
         }
@@ -127,9 +128,6 @@ export default {
       })
     }
 
-    function logout(){
-
-    }
 
 
     return {
@@ -138,7 +136,6 @@ export default {
       regist,
       login,
       loginData,
-      logout
       
       
     };
