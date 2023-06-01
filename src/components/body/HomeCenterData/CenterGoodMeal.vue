@@ -97,6 +97,7 @@ export default {
           console.error(error);
         }
       } else {
+        data.loading = true;
         try {
           const navermealresponse = await fetch(
             "http://localhost:5000/gptmeal2API",
