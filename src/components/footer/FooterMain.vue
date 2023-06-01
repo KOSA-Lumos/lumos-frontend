@@ -7,9 +7,14 @@
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/')">Home</v-btn>
         <v-btn v-if="!loginUser" color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/login')">Login</v-btn>
         <v-btn v-else color="white" variant="text" class="mx-2" rounded="xl" @click="logout">Logout</v-btn>
+        <!-- <v-icon @click="moveTo('/login')" >mdi-account</v-icon> -->
+
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/yunittest')">YunitTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/jeongtest')">JeongTest</v-btn>
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/hongtest')">HongTest</v-btn>
+        <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/admin')">admin</v-btn>
+         <!-- <v-btn v-else-if="loginUser && loginUser.admin_YN === 'Y'" color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/admin')">admin</v-btn> -->
+         <!-- <v-btn v-else-if="loginUser === 'admin'" color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/admin')">admin</v-btn> -->
             <!-- ShareThis BEGIN -->
   <div class="sharethis-inline-share-buttons"></div>
   <!-- ShareThis END -->
@@ -32,7 +37,8 @@ export default {
   }),
   computed: {
     loginUser(){
-      console.log("~~사용자인증 성공^ㅁ^~~");
+      console.log("~~로그인 유무 확인~~");
+      console.log(this.$store.getters.loginUser);
       return this.$store.getters.loginUser;
 
     }
