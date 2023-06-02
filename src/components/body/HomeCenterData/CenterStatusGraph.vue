@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, watch } from 'vue';
 import Chart from 'chart.js/auto';
 import axios from "axios";
+import store from "@/store";
 
 export default {
   name: 'DataGraph',
@@ -15,11 +16,20 @@ export default {
     var serverUrl = process.env.VUE_APP_SERVER_URL;
 
     const myChart = ref(null);
+    let chartInstance = null; // Reference to the Chart instance
 
     const state = reactive({
-      center_num: "1",
+      center_num: null,
       testData: null,
     });
+    
+    watch(
+      () => store.getters.getClickedCenter.centerNum,
+      (newCenterNum) => {
+        state.center_num = newCenterNum;
+        getDetailData();
+      }
+    );
 
     const getDetailData = () => {
       axios
@@ -27,7 +37,13 @@ export default {
         .then((response) => {
           state.testData = response.data;
           const ctx = myChart.value.getContext('2d');
-          new Chart(ctx, {
+
+          // Destroy previous Chart instance if exists
+          if (chartInstance) {
+            chartInstance.destroy();
+          }
+
+          chartInstance = new Chart(ctx, {
             type: 'bar',
             data: {
               labels: ['방 개수', '선생님 수', '놀이터 개수(1/10)', '정원', '현원'],
