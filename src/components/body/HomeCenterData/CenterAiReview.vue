@@ -1,19 +1,20 @@
 <template>
   <div>
-    <v-btn @click="googletransrateApp">(삭제할버튼) 구글번역테스트하기</v-btn>
+    <!-- <v-btn @click="googletransrateApp">(삭제할버튼) 구글번역테스트하기</v-btn>
     <br />
-    <br />
+    <br /> -->
     <div><v-btn @click="callEmotionApp">어린이집 후기 분석</v-btn></div>
     <br>
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
-      label="(Amazone)후기가 긍정적일까요 부정적일까요"
+      label="(Amazone)후기가 긍정적/부정적인지 분석"
       :readonly="true"
       rows="15"
+      v-model="data.emotion"
     ></v-textarea>
     <br />
-    <div><v-btn @click="kinderresourceAPP">어린이집 선택하기 어려우면 클릭하세요!!</v-btn></div>
+    <div><v-btn @click="kinderresourceAPP">어린이집 선택시 고려할 목록</v-btn></div>
     <br>
     <v-textarea
       bg-color="grey-lighten-5"
@@ -26,9 +27,9 @@
   </div>
 
   <div>
-      <v-btn @click="callNaverApp"
+      <!-- <v-btn @click="callNaverApp"
         >(시연용) Naver 카페검색하기 App v-card로 배치가능</v-btn
-      >
+      > -->
     </div>
     <br />
     <div id="app">
@@ -84,11 +85,22 @@ export default {
         const response = await fetch("http://localhost:5000/emotionApi", {
           method: "POST",
         });
-        const responseData = await response.json();
-        
-        data.response = responseData;
+        const emotionparse = await response.json();
+        data.emotional = JSON.stringify(emotionparse)          
+        console.log(data.emotional);
+        const emotionPart = data.emotional.split('"ResponseMetadata"')[0];
+        // const emotionData = emotionPart['결과'];
+
+        data.emotion = JSON.stringify(emotionPart)
+        .replace(/\\/g, "") 
+        .replace(/"/g, "") 
+        .replace(/,/g, "\n") 
+        .replace(/result/g, "분석결과") 
+        .replace(/{/g, "\n") 
+        .replace(/}/g, "\n") 
+        .replace(/:\s*(\d+\.\d{0,4})/g, ": $1");
         data.loading = false
-        console.log(responseData);
+        console.log(emotionPart);
       } catch (error) {
         data.loading = false
         console.error(error);

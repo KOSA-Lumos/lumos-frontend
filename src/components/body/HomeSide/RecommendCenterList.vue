@@ -138,7 +138,10 @@ addFavoriteCenter(centerNum) {
   // 이미 찜하기가 눌린 상태인지 확인
   const isFavorite = this.isFavorite.includes(centerNum);
 
-  if (isFavorite) {
+  if(data.userId === '') {
+    alert("로그인이 필요합니다")
+    this.$router.push('/login');
+  } else if (isFavorite) {
     // 이미 찜하기가 눌린 상태이므로 삭제 요청을 보냄
     this.$axios.post(url, data)
     // this.$axios.post(url, { data: data })

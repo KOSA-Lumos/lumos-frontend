@@ -30,23 +30,30 @@
 </template>
 
 <script>
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import axios from "axios";
+import store from "@/store";
 
 export default {
   setup() {
     var serverUrl = process.env.VUE_APP_SERVER_URL;
 
     const state = reactive({
-      center_num: "1",
+      center_num: null,
       testData: null,
     });
 
+    watch(
+      () => store.getters.getClickedCenter.centerNum,
+      (newCenterNum) => {
+        state.center_num = newCenterNum;
+        getTestData();
+      }
+    );
+
     const getTestData = () => {
       axios
-        .get(
-          `${serverUrl}/kindergartendetail/${state.center_num}/information`
-        )
+        .get(`${serverUrl}/kindergartendetail/${state.center_num}/information`)
         .then((response) => {
           state.testData = response.data;
         })
@@ -55,52 +62,10 @@ export default {
         });
     };
 
-    getTestData();
-
     return {
       state,
       getTestData,
-      testData: state.testData,
     };
   },
 };
-
 </script>
-
-
-// vuestore에서 usernumber갖고오기
-// import { reactive, computed } from "vue";
-// import axios from "axios";
-// import { useStore } from "vuex"; // Import the useStore function from vuex
-
-// export default {
-//   setup() {
-//     var serverUrl = process.env.VUE_APP_SERVER_URL;
-
-//     const store = useStore(); // Access the Vuex store
-
-//     const state = reactive({
-//       testData: null,
-//     });
-
-//     const getTestData = () => {
-//       axios
-//         .get(`${serverUrl}/kindergartendetail/${store.state.center_num}/information`) // Use store.state.center_num instead of state.center_num
-//         .then((response) => {
-//           state.testData = response.data;
-//         })
-//         .catch((error) => {
-//           console.log(error);
-//         });
-//     };
-
-//     getTestData();
-
-//     return {
-//       state,
-//       getTestData,
-//       testData: state.testData,
-//     };
-//   },
-// };
-

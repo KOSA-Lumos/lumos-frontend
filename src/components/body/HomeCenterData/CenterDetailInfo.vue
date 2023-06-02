@@ -86,7 +86,6 @@
             }}</a>
           </td>
         </tr>
-
         <tr>
           <th>설립일자</th>
           <td>{{ state.testData.center_detail_establish }}</td>
@@ -95,36 +94,6 @@
     </v-table>
   </div>
   <br />
-  <div>
-    <!-- <v-btn @click="getData">유치원 데이터 가져오기</v-btn> -->
-    <!-- <v-row v-if="data.kinderInfo">
-      <v-col cols="12">
-        <ul v-if="data.kinderInfo.length > 0">
-          <li>주소: {{ data.kinderInfo[0].addr }}</li>
-          <li>3년제학급수: {{ data.kinderInfo[0].clcnt3 }}</li>
-          <li>4년제학급수: {{ data.kinderInfo[0].clcnt4 }}</li>
-          <li>5년제학급수: {{ data.kinderInfo[0].clcnt5 }}</li>
-          <li>설립일자: {{ data.kinderInfo[0].edate }}</li>
-          <li>설립유형: {{ data.kinderInfo[0].establish }}</li>
-          <li>전화번호: {{ data.kinderInfo[0].telno }}</li>
-          <li>홈페이지 주소: {{ data.kinderInfo[0].hpaddr }}</li>
-          <li>교육청명: {{ data.kinderInfo[0].officeedu }}</li>
-          <li>운영시간: {{ data.kinderInfo[0].opertime }}</li>
-          <li>공학시간: {{ data.kinderInfo[0].pbnttmng }}</li>
-          <li>3세급수: {{ data.kinderInfo[0].ppcnt3 }}</li>
-          <li>4세급수: {{ data.kinderInfo[0].ppcnt4 }}</li>
-          <li>5세급수: {{ data.kinderInfo[0].ppcnt5 }}</li>
-          <li>혼합급수: {{ data.kinderInfo[0].mixclcnt }}</li>
-          <li>혼합인원수: {{ data.kinderInfo[0].mixppcnt }}</li>
-          <li>개원일자: {{ data.kinderInfo[0].odate }}</li>
-          <li>소재지 우편번호: {{ data.kinderInfo[0].rppnname }}</li>
-          <li>어린이보호구역내 학교여부: {{ data.kinderInfo[0].shclcnt }}</li>
-          <li>어린이보호구역내 유치원여부: {{ data.kinderInfo[0].shppcnt }}</li>
-          <li>교육지원청명: {{ data.kinderInfo[0].subofficeedu }}</li>
-        </ul>
-      </v-col>
-    </v-row> -->
-  </div>
   <br />
   <div id="kakaoshare" class="text-center">
     <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
@@ -133,8 +102,9 @@
 
 
 <script>
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
 import axios from "axios";
+import store from "@/store";
 
 export default {
   name: "App",
@@ -156,9 +126,17 @@ export default {
     });
 
     const state = reactive({
-      center_num: "1",
+      center_num: null,
       testData: null,
     });
+
+    watch(
+      () => store.getters.getClickedCenter.centerNum,
+      (newCenterNum) => {
+        state.center_num = newCenterNum;
+        getDetailData();
+      }
+    );
 
     const getDetailData = () => {
       axios

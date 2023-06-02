@@ -26,24 +26,39 @@
     </v-table>
   </div>
   <div>
-    <canvas id="myChart" ref="myChart" style="height: 500px;"></canvas>
+    <canvas id="myChart" style="height: 500px;"></canvas>
   </div>
 </template> 
 
 
 
 <script>
-import { reactive, ref } from "vue";
+import { ref, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
 import Chart from "chart.js/auto";
 import axios from "axios";
+import store from "@/store";
 
 export default {
   setup() {
     var serverUrl = process.env.VUE_APP_SERVER_URL;
+    let chartInstance = null;
 
     const state = reactive({
-      center_num: "1",
+      center_num: null,
       testData: {},
+    });
+
+    watch(
+      () => store.getters.getClickedCenter.centerNum,
+      (newCenterNum) => {
+        state.center_num = newCenterNum;
+        getGradeData();
+      }
+    );
+    
+    onMounted(() => {
+      getGradeData();
+      renderChart();
     });
 
     const getGradeData = async () => {
@@ -148,7 +163,10 @@ export default {
     };
 
     const renderChart = () => {
-      const ctx = myChart.value.getContext("2d");
+      if (chartInstance !== null) {
+        chartInstance.destroy();
+      }
+      const ctx = document.getElementById("myChart").getContext("2d");
       const datasets = [
         {
           label: "현 어린이집 등급위치",
@@ -200,7 +218,7 @@ export default {
         },
       ];
 
-      new Chart(ctx, {
+      chartInstance = new Chart(ctx, {
         type: "bar",
         data: {
           labels: [
@@ -236,6 +254,13 @@ export default {
         },
       });
     };
+    
+    onBeforeUnmount(() => {
+      // Destroy chart when component is unmounted
+      if (chartInstance !== null) {
+        chartInstance.destroy();
+      }
+    });
 
     getGradeData();
 
