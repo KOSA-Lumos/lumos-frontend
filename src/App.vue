@@ -1,10 +1,10 @@
 <template>
   <v-app>
 
-    <div  style="min-height: calc(100vh - 92px)">
+    <div style="height: calc(100vh - 54px);">
       <router-view />
     </div>
-    <div style="height: 92px">
+    <div style="height: 54px">
       <footer-main />
     </div>
 

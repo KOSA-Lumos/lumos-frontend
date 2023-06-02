@@ -14,7 +14,33 @@
     </v-row>
     
     <v-divider></v-divider>
+    
+    <!-- dialog -->
+    <v-dialog
+      v-model="dialog"
+      width="80%"
+    >
+      <template>
+        <!-- <v-btn
+          color="primary"
+          v-bind="props"
+        >
+          Dialog 열기
+        </v-btn> -->
+      </template>
 
+      <v-card>
+        <v-card-text>
+          <home-center-data-layout />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="dialog = false">Dialog 닫기</v-btn>
+        </v-card-actions>
+      </v-card>
+      
+    </v-dialog>
+
+    <!-- list -->
     <div v-for="rcmdCenter in recommendedCenters"
       :key="rcmdCenter.centerNum"
       @click="displayClickedCenterDetail(rcmdCenter)">
@@ -37,13 +63,16 @@
 </template>
 
 <script>
+import HomeCenterDataLayout from '@/components/layout/Home/HomeCenterDataLayout.vue';
 // import axios from 'axios';
 // import store from '@/store';
 export default {
+  components: { HomeCenterDataLayout },
   data() {
     return {
       myPosition: "서울특별시 종로구",
-      isFavorite: []
+      isFavorite: [],
+      dialog: false,
     };
   },
   computed: {
@@ -106,6 +135,7 @@ export default {
     // 리스트에서 보육시설 클릭 시 실행
     displayClickedCenterDetail(scdCenter) {
       // console.log("@@ displayClickedCenterDetail 실행");
+      this.dialog = true;
       this.$store.dispatch('setClickedCenter', scdCenter);
     },
 
@@ -128,53 +158,50 @@ export default {
     //   });
     // }
 
-addFavoriteCenter(centerNum) {
-  const url = process.env.VUE_APP_SERVER_URL + '/searchMap/favorite';
-  const data = {
-    centerNum: centerNum,
-    userId: this.$store.getters.getUserId,
-  }
+    addFavoriteCenter(centerNum) {
+      const url = process.env.VUE_APP_SERVER_URL + '/searchMap/favorite';
+      const data = {
+        centerNum: centerNum,
+        userId: this.$store.getters.getUserId,
+      }
 
-  // 이미 찜하기가 눌린 상태인지 확인
-  const isFavorite = this.isFavorite.includes(centerNum);
+      // 이미 찜하기가 눌린 상태인지 확인
+      const isFavorite = this.isFavorite.includes(centerNum);
 
-  if(data.userId === '') {
-    alert("로그인이 필요합니다")
-    this.$router.push('/login');
-  } else if (isFavorite) {
-    // 이미 찜하기가 눌린 상태이므로 삭제 요청을 보냄
-    this.$axios.post(url, data)
-    // this.$axios.post(url, { data: data })
-      .then((response) => {
-        console.log("~~ deleteFavoriteCenter 성공 ~~", response);
-        // 찜하기 목록에서 삭제된 centerNum을 제거
-        const index = this.isFavorite.indexOf(centerNum);
-        if (index > -1) {
-          this.isFavorite.splice(index, 1);
-        }
-        // 로컬 스토리지에서 찜한 목록 업데이트
-        localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
-      })
-      .catch((error) => {
-        console.log("~~ deleteFavoriteCenter 실패 ~~");
-        console.log(error);
-      });
-  } else {
-    // 찜하기 추가 요청을 보냄
-    this.$axios.post(url, data)
-      .then((response) => {
-        console.log("~~ addFavoriteCenter 성공 ~~", response);
-        // 찜하기 목록에 centerNum을 추가
-        this.isFavorite.push(centerNum);
-        // 로컬 스토리지에서 찜한 목록 업데이트
-        localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
-      })
-      .catch((error) => {
-        console.log("~~ addFavoriteCenter 실패 ~~");
-        console.log(error);
-      });
-  }
-},
+      if (isFavorite) {
+        // 이미 찜하기가 눌린 상태이므로 삭제 요청을 보냄
+        this.$axios.post(url, data)
+        // this.$axios.post(url, { data: data })
+          .then((response) => {
+            console.log("~~ deleteFavoriteCenter 성공 ~~", response);
+            // 찜하기 목록에서 삭제된 centerNum을 제거
+            const index = this.isFavorite.indexOf(centerNum);
+            if (index > -1) {
+              this.isFavorite.splice(index, 1);
+            }
+            // 로컬 스토리지에서 찜한 목록 업데이트
+            localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
+          })
+          .catch((error) => {
+            console.log("~~ deleteFavoriteCenter 실패 ~~");
+            console.log(error);
+          });
+      } else {
+        // 찜하기 추가 요청을 보냄
+        this.$axios.post(url, data)
+          .then((response) => {
+            console.log("~~ addFavoriteCenter 성공 ~~", response);
+            // 찜하기 목록에 centerNum을 추가
+            this.isFavorite.push(centerNum);
+            // 로컬 스토리지에서 찜한 목록 업데이트
+            localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
+          })
+          .catch((error) => {
+            console.log("~~ addFavoriteCenter 실패 ~~");
+            console.log(error);
+          });
+      }
+    },
 
   },
 }

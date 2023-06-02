@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card style="min-height: 350px">
+    <v-card style="height: 75vh">
       <v-tabs fixed-tabs v-model="tab" bg-color="yellow lighten-4">
         <v-tab :value="1">
           <v-icon left>mdi-information</v-icon>
