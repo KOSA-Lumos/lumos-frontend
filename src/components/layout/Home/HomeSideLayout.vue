@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card style="height: 740px">
+    <v-card style="height: calc(100vh - 54px)">
 
       <v-tabs
         fixed-tabs

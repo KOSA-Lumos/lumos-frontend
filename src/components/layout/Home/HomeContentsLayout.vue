@@ -1,14 +1,15 @@
 <template>
-  <v-container>
-    <v-row style="height: 40px; background-color: aquamarine;">
+  <div>
+    
+    <v-row style="height: 40px; background-color: #f0f0f0;">
       <spec-select-box />
     </v-row>
 
-    <v-row style="height: 700px;">
+    <v-row style="height: calc(100vh - 82px);">
       <map-box />
     </v-row>
 
-  </v-container>
+  </div>
 </template>
 
 <script>

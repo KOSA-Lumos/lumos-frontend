@@ -1,7 +1,7 @@
 <template>
   <v-footer class="bg-blue-grey-darken-3">
 
-    <v-row justify="center" no-gutters>
+    <v-row>
 
       <v-col class="text-center" cols="12">
         <v-btn color="white" variant="text" class="mx-2" rounded="xl" @click="moveTo('/')"><v-icon left>mdi-home</v-icon></v-btn>
@@ -21,10 +21,6 @@
   <!-- ShareThis END -->
       </v-col>
 
-      <v-col class="text-center mt-4" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
-      </v-col>
-      
     </v-row>
 
   </v-footer>
