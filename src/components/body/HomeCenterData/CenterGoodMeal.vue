@@ -18,7 +18,7 @@
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
-      label="(Naver)GPT에게 식단을 추천받으세요!!"
+      label="(GPT, Naver)GPT에게 식단을 추천받으세요!!"
       :readonly="true"
       v-model="data.naverkoreanText"
       rows="15"
@@ -56,7 +56,7 @@ export default {
       koreanText: "",
       exceptmeal: "",
       dialog: false,
-      loading: false, // Added the "loading" property
+      loading: false, 
     });
 
     async function showLoadingScreen() {

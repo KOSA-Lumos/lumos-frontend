@@ -16,7 +16,7 @@ export default {
     var serverUrl = process.env.VUE_APP_SERVER_URL;
 
     const myChart = ref(null);
-    let chartInstance = null; // Reference to the Chart instance
+    let chartInstance = null; 
 
     const state = reactive({
       center_num: null,
@@ -35,7 +35,6 @@ export default {
           state.testData = response.data;
           const ctx = myChart.value.getContext('2d');
 
-          // Destroy previous Chart instance if exists
           if (chartInstance) {
             chartInstance.destroy();
           }

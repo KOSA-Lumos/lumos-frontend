@@ -14,10 +14,6 @@
           <v-icon left>mdi-chart-bar</v-icon>
           비교그래프
         </v-tab>
-        <v-tab :value="4">
-          <v-icon left>mdi-star</v-icon>
-          평가등급
-        </v-tab>
         <v-tab :value="5">
           <v-icon left>mdi-food</v-icon>
           어린이식단추천
@@ -61,10 +57,10 @@
 
 <script>
 import CenterBasicInfo from "@/components/body/HomeCenterData/CenterBasicInfo.vue";
-import CenterDetailInfo from "@/components/body/HomeCenterData/CenterDetailInfo.vue";
+import CenterDetailInfo from "@/components/body/HomeCenterData/CenterDetailInfoKind.vue";
 import CenterEvalGrade from "@/components/body/HomeCenterData/CenterEvalGrade.vue";
 import CenterGoodMeal from "@/components/body/HomeCenterData/CenterGoodMeal.vue";
-import CenterStatusGraph from "@/components/body/HomeCenterData/CenterStatusGraph.vue";
+import CenterStatusGraph from "@/components/body/HomeCenterData/CenterStatusGraphKind.vue";
 import CenterAiReview from "@/components/body/HomeCenterData/CenterAiReview.vue";
 
 export default {
