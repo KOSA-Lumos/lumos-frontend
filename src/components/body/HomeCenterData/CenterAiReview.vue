@@ -8,7 +8,7 @@
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
-      label="(Amazone)후기가 긍정적/부정적인지 분석"
+      label="(Amazone, Naver)후기가 긍정적/부정적인지 분석"
       :readonly="true"
       rows="15"
       v-model="data.emotion"
@@ -19,7 +19,7 @@
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
-      label="(GPT) 어린이집 선택시 고려할 목록"
+      label="(GPT, Naver) 어린이집 선택시 고려할 목록"
       :readonly="true"
       rows="15"
       v-model="data.koreanText"
@@ -186,10 +186,6 @@ export default {
           .replace(/"/, "")
           .replace(/\\ n/g, "\n");
 
-        // data.koreanText = decodeURIComponent(JSON.parse(decodedText));
-        // console.log(data.koreanText);
-        // data.koreanText.replace(/(^{|\}$)/g, '') // {와 } 제거
-        // .replace(/\\n\\n/g, '\n\n'); // \n\n이 나올 때마다 엔터 삽입
       } catch (error) {
         data.loading = false
         console.error(error);

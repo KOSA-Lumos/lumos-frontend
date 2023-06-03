@@ -250,7 +250,6 @@ export default {
     };
     
     onBeforeUnmount(() => {
-      // Destroy chart when component is unmounted
       if (chartInstance !== null) {
         chartInstance.destroy();
       }
