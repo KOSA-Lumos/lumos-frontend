@@ -155,7 +155,7 @@ export default {
             // 찜하기 목록에서 삭제된 centerNum을 제거
             // 로컬 스토리지에서 찜한 목록 업데이트
             localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
-            // window.location.reload()
+            window.location.reload()
           })
           .catch((error) => {
             console.log("~~ deleteFavoriteCenter 실패 ~~");
