@@ -1,10 +1,11 @@
 <template>
   <v-container class="signup-container" fluid>
       <v-card ref="form">
-        <v-card-text>
-          <v-row>
-            <v-col cols="12" sm="6">
-              <v-text-field
+        <v-card-text class="custom-card-text">
+          <h1 class="text-center">회원가입</h1><br>
+           <v-row class="custom-row">
+            <v-col cols="12" sm="6" class="input-col">
+              <v-text-field variant="outlined"
                 v-model="signUpData.userId"
                 :rules="userIdRules"
                 label="아이디"
@@ -16,33 +17,33 @@
               >
             </v-col>
           </v-row>
-          <v-text-field
+          <v-text-field variant="outlined"
             v-model="signUpData.userPw"
             type="password"
             label="비밀번호"
           ></v-text-field>
-          <v-text-field
+          <v-text-field variant="outlined"
             v-model="signUpData.userPwConfirm"
             type="password"
             :rules="userPwConfirmRules"
             label="비밀번호 확인"
           ></v-text-field>
-          <v-text-field
+          <v-text-field variant="outlined"
             v-model="signUpData.userName"
             label="이름"
           ></v-text-field>
-          <v-text-field
+          <v-text-field variant="outlined"
             v-model="signUpData.nickname"
             label="닉네임"
           ></v-text-field>
-          <v-text-field
+          <v-text-field variant="outlined"
             v-model="signUpData.phone"
             :rules="phoneRules"
             label="연락처"
           ></v-text-field>
           <v-row>
             <v-col cols="12" sm="6">
-              <v-text-field
+              <v-text-field variant="outlined"
                 label="우편번호"
                 v-model="signUpData.zonecode"
                 readonly
@@ -54,15 +55,21 @@
               >
             </v-col>
           </v-row>
-          <v-text-field
-            label="주소"
-            v-model="signUpData.roadAddress"
-            readonly
-          ></v-text-field>
-          <v-text-field
-            label="상세주소"
-            v-model="signUpData.detailAddress"
-          ></v-text-field>
+          <v-row class="custom-row">
+            <v-col cols="12" sm="6">
+              <v-text-field variant="outlined"
+                label="주소"
+                v-model="signUpData.roadAddress"
+                readonly
+              ></v-text-field>
+            </v-col>
+            <v-col cols="12" sm="6">
+              <v-text-field variant="outlined"
+                label="상세주소"
+                v-model="signUpData.detailAddress"
+              ></v-text-field>
+            </v-col>
+          </v-row>
           <v-divider class="mt-5"></v-divider>
           <v-card-actions>
             <v-btn flat @click="goback">Cancel</v-btn>
@@ -243,18 +250,24 @@ export default {
 
 
 <style scoped>
-/* * {
-  margin: 0;
-  padding: 0;
-} */
-
 .v-text-card {
   width: 800px;
+  height: 1400px;
 }
 
 .signup-container {
   width: 600px;
-  margin-top: 60px;
+  /* height: 1000px; */
+  /* margin-top: 10px; */
 }
+
+.custom-card-text {
+  padding: 20px;
+}
+
+.input-col {
+  margin-bottom: 0;
+}
+
 </style>
 
