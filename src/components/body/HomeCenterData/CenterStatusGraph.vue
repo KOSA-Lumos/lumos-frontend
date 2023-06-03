@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { ref, onMounted, reactive, watch } from 'vue';
+import { ref, onMounted, reactive } from 'vue';
 import Chart from 'chart.js/auto';
 import axios from "axios";
 import store from "@/store";
@@ -23,13 +23,10 @@ export default {
       testData: null,
     });
     
-    watch(
-      () => store.getters.getClickedCenter.centerNum,
-      (newCenterNum) => {
-        state.center_num = newCenterNum;
-        getDetailData();
-      }
-    );
+    onMounted(() => {
+      state.center_num = store.getters.getClickedCenter.centerNum;
+      getDetailData();
+    });
 
     const getDetailData = () => {
       axios
@@ -82,9 +79,7 @@ export default {
         });
     };
 
-    onMounted(() => {
-      getDetailData();
-    });
+
 
     return { myChart };
   }
