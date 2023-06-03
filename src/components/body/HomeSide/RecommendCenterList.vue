@@ -15,29 +15,38 @@
     
     <v-divider></v-divider>
     
-    <!-- dialog -->
+    <!-- dialog(어린이집) -->
     <v-dialog
-      v-model="dialog"
+      v-model="dialogKidscare"
       width="80%"
     >
       <template>
-        <!-- <v-btn
-          color="primary"
-          v-bind="props"
-        >
-          Dialog 열기
-        </v-btn> -->
       </template>
-
       <v-card>
         <v-card-text>
           <home-center-data-layout />
         </v-card-text>
         <v-card-actions>
-          <v-btn color="primary" block @click="dialog = false">Dialog 닫기</v-btn>
+          <v-btn color="primary" block @click="dialogKidscare = false">닫기</v-btn>
         </v-card-actions>
       </v-card>
-      
+    </v-dialog>
+    
+    <!-- dialog(유치원) -->
+    <v-dialog
+      v-model="dialogKinder"
+      width="80%"
+    >
+      <template>
+      </template>
+      <v-card>
+        <v-card-text>
+          <home-kinder-data-layout />
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" block @click="dialogKinder = false">닫기</v-btn>
+        </v-card-actions>
+      </v-card>
     </v-dialog>
 
     <!-- list -->
@@ -64,15 +73,17 @@
 
 <script>
 import HomeCenterDataLayout from '@/components/layout/Home/HomeCenterDataLayout.vue';
+import HomeKinderDataLayout from '@/components/layout/Home/HomeKinderDataLayout.vue';
 // import axios from 'axios';
 // import store from '@/store';
 export default {
-  components: { HomeCenterDataLayout },
+  components: { HomeCenterDataLayout, HomeKinderDataLayout },
   data() {
     return {
       myPosition: "서울특별시 종로구",
       isFavorite: [],
-      dialog: false,
+      dialogKidscare: false,
+      dialogKinder: false,
     };
   },
   computed: {
@@ -135,7 +146,13 @@ export default {
     // 리스트에서 보육시설 클릭 시 실행
     displayClickedCenterDetail(scdCenter) {
       // console.log("@@ displayClickedCenterDetail 실행");
-      this.dialog = true;
+      console.log("카테고리", scdCenter.centerCategory);
+      // if (scdCenter.centerCategory)
+      if (scdCenter.centerCategory === "어린이집") {
+        this.dialogKidscare = true;
+      } else {
+        this.dialogKinder = true;
+      }
       this.$store.dispatch('setClickedCenter', scdCenter);
     },
 
