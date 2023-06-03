@@ -6,26 +6,34 @@
     >
       찜한 목록
     </h1>
-    <v-card style="background-color: #f5f5f5; max-width: 1700px; min-height: 300px">
-      <v-row>
-        <v-col
-          v-for="favorite in favoriteList"
-          :key="favorite.center_num"
-          cols="3"
-        >
-          <v-card class="mb-3">
-            <v-card-title>{{ favorite.center_name }}</v-card-title>
-            <v-card-text>
-              유형: {{ favorite.center_category }} <br />
-              주소: {{ favorite.center_state }} {{ favorite.center_city }}
-              <br />
-              어린이집 유형: {{ favorite.center_type }} <br />
-              연장보육 여부: {{ favorite.center_extendcare ? "O" : "X" }}
-            </v-card-text>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-card>
+   
+<v-card style="background-color: #f5f5f5; max-width: 1330px; min-height: 300px">
+  <v-row>
+    <v-col
+      v-for="favorite in favoriteList"
+      :key="favorite.center_num"
+      cols="3"
+    >
+      <v-card class="mb-3">
+        <v-card-title class="d-flex align-center justify-space-between">
+          <span>{{ favorite.center_name }}</span>
+          <v-btn icon>
+            <v-icon @click="deleteFavorite(favorite.center_num)">mdi-close</v-icon>
+          </v-btn>
+        </v-card-title>
+        <v-card-text>
+          유형: {{ favorite.center_category }} <br />
+          주소: {{ favorite.center_state }} {{ favorite.center_city }}
+          <br />
+          어린이집 유형: {{ favorite.center_type }} <br />
+          연장보육 여부: {{ favorite.center_extendcare ? "O" : "X" }}
+        </v-card-text>
+      </v-card>
+    </v-col>
+  </v-row>
+</v-card>
+
+
   </div>
   <br>
   <div>
@@ -73,18 +81,11 @@ import store from "@/store";
 export default {
   setup() {
     const favoriteList = ref([]);
+    const isFavoriteList = ref([]);
 
     var serverUrl = process.env.VUE_APP_SERVER_URL;
 
     onMounted(async () => {
-      // try {
-      // const userId = store.getters.getUserId;
-      //   const res = await axios.get(`${serverUrl}/favorite/`);
-      //   console.log('favoriteList', res.data);
-      //   favoriteList.value = res.data;
-      // } catch (error) {
-      //   console.log('error', error);
-      // }
       axios
         .get(`${serverUrl}/favorite`, {
           params: {
@@ -94,6 +95,8 @@ export default {
         .then((res) => {
           console.log("favoriteList", res.data);
           favoriteList.value = res.data;
+           // 로컬 스토리지에서 찜한 목록 업데이트
+          isFavoriteList.value = JSON.parse(localStorage.getItem('favorites')) || [];
         })
         .catch((err) => {
           console.log(err);
@@ -140,8 +143,64 @@ export default {
       }
     }
 
+  async function deleteFavorite(centerNum){
+      const url = process.env.VUE_APP_SERVER_URL + '/searchMap/delete-favorite';
+      const data = {
+        centerNum: centerNum,
+        userId: store.getters.getUserId,
+      }
+        axios.post(url, data)
+          .then((response) => {
+            console.log("fefwefwefw", response);
+            // 찜하기 목록에서 삭제된 centerNum을 제거
+            // 로컬 스토리지에서 찜한 목록 업데이트
+            localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
+            // window.location.reload()
+          })
+          .catch((error) => {
+            console.log("~~ deleteFavoriteCenter 실패 ~~");
+            console.log(error);
+          });
+  }
+    
+  //   async function addFavoriteCenter(centerNum) {
+  //     const url = process.env.VUE_APP_SERVER_URL + '/searchMap/favorite';
+  //     const data = {
+  //       centerNum: centerNum,
+  //       userId: store.getters.getUserId,
+  // }
+
+  //     // 이미 찜하기가 눌린 상태인지 확인
+  //     const isFavorite = isFavoriteList.value.includes(centerNum);
+
+  //     if (isFavorite) {
+  //       // 이미 찜하기가 눌린 상태이므로 삭제 요청을 보냄
+  //       axios.post(url, data)
+  //       // this.$axios.post(url, { data: data })
+  //         .then((response) => {
+  //           console.log("~~ deleteFavoriteCenter 성공 ~~", response);
+  //           // 찜하기 목록에서 삭제된 centerNum을 제거
+  //           const index = this.isFavorite.indexOf(centerNum);
+  //           if (index > -1) {
+  //             this.isFavorite.splice(index, 1);
+  //           }
+  //           // 로컬 스토리지에서 찜한 목록 업데이트
+  //           localStorage.setItem('favorites', JSON.stringify(this.isFavorite));
+
+  //           window.location.reload()
+  //         })
+  //         .catch((error) => {
+  //           console.log("~~ deleteFavoriteCenter 실패 ~~");
+  //           console.log(error);
+  //           window.location.reload()
+  //         });
+      
+  //     }
+  //   }
+
     return {
       favoriteList,
+      deleteFavorite,
       data,
       kinderrecommendAPP,
     };
