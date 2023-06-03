@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <v-row style="height: 40px; background-color: #f0f0f0;">
+    <v-row style="height: 40px;">
       <spec-select-box />
     </v-row>
 
