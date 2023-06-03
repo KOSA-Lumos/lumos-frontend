@@ -1,7 +1,7 @@
 <template>
   <div v-if="state.testData">
     <v-table density="compact">
-      <tbody>
+      <tbody >
         <tr>
           <th>센터번호</th>
           <td>{{ state.testData.center_num }}</td>
@@ -102,7 +102,7 @@
 
 
 <script>
-import { reactive, watch } from "vue";
+import { reactive, onMounted } from "vue";
 import axios from "axios";
 import store from "@/store";
 
@@ -130,13 +130,11 @@ export default {
       testData: null,
     });
 
-    watch(
-      () => store.getters.getClickedCenter.centerNum,
-      (newCenterNum) => {
-        state.center_num = newCenterNum;
-        getDetailData();
-      }
-    );
+    onMounted(() => {
+      state.center_num = store.getters.getClickedCenter.centerNum;
+      console.log(store.getters.getClickedCenter.centerNum);
+      getDetailData();
+    });
 
     const getDetailData = () => {
       axios
@@ -179,6 +177,10 @@ export default {
 </script>
 
 <style scored>
+  tbody th {
+    width: 300px;
+  }
+
 #kakaoshare {
   display: flex;
   justify-content: center;

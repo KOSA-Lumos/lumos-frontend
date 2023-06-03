@@ -33,7 +33,7 @@
 
 
 <script>
-import { ref, reactive, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
 import Chart from "chart.js/auto";
 import axios from "axios";
 import store from "@/store";
@@ -48,15 +48,9 @@ export default {
       testData: {},
     });
 
-    watch(
-      () => store.getters.getClickedCenter.centerNum,
-      (newCenterNum) => {
-        state.center_num = newCenterNum;
-        getGradeData();
-      }
-    );
-    
+
     onMounted(() => {
+      state.center_num = store.getters.getClickedCenter.centerNum;
       getGradeData();
       renderChart();
     });

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { reactive, watch } from "vue";
+import { reactive, onMounted } from "vue";
 import axios from "axios";
 import store from "@/store";
 
@@ -43,14 +43,6 @@ export default {
       testData: null,
     });
 
-    watch(
-      () => store.getters.getClickedCenter.centerNum,
-      (newCenterNum) => {
-        state.center_num = newCenterNum;
-        getTestData();
-      }
-    );
-
     const getTestData = () => {
       axios
         .get(`${serverUrl}/kindergartendetail/${state.center_num}/information`)
@@ -61,6 +53,12 @@ export default {
           console.log(error);
         });
     };
+
+    onMounted(() => {
+      state.center_num = store.getters.getClickedCenter.centerNum;
+      console.log(store.getters.getClickedCenter.centerNum);
+      getTestData();
+    });
 
     return {
       state,
