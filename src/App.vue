@@ -4,7 +4,7 @@
     <div style="height: calc(100vh - 54px);">
       <router-view />
     </div>
-    <div style="height: 54px">
+    <div class="footer">
       <footer-main />
     </div>
 
@@ -19,8 +19,15 @@ export default {
   components: {
     FooterMain,
   },
-  methods: {
-    
-  },
 };
 </script>
+
+<style scoped>
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 54px;
+}
+</style>

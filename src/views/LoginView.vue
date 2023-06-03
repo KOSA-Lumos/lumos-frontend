@@ -1,25 +1,21 @@
 <template>
-  <v-app id="inspire">
-    <v-main class="blue-grey lighten-4">
-      <v-container class="loginPage-container" fill-height>
-        <!-- <v-layout align-center row wrap> -->
-            <v-card>
-              <div class="pa-10">
-                <h1 style="text-align: center" class="mb-10">Login</h1>
-                <form>
-                  <v-text-field v-model="loginData.userId" label="ID" prepend-inner-icon="mdi-account"></v-text-field>
-                  <v-text-field v-model="loginData.userPw" prepend-inner-icon="mdi-lock" type="password" label="Password"></v-text-field>
-                  <v-btn @click="login" color="orange darken-2 text-capitalize" depressed large block dark class="mb-3">Login</v-btn>
-                  <v-btn @click="regist" color="orange darken-2 text-capitalize" depressed large block dark>Sign Up</v-btn>
-                  <br>
-                  <v-btn @click="kakaoLogin" color="yellow darken-2 text-capitalize" depressed large block dark>카카오로그인</v-btn>
-                </form>
-              </div>
-            </v-card>
-        <!-- </v-layout> -->
-      </v-container>
-    </v-main>
-  </v-app>
+  <v-container class="loginPage-container" fill-height>
+    <!-- <v-layout align-center row wrap> -->
+      <v-card>
+        <div class="pa-10">
+          <h1 style="text-align: center" class="mb-10">Login</h1>
+          <form>
+            <v-text-field v-model="loginData.userId" label="ID" prepend-inner-icon="mdi-account"></v-text-field>
+            <v-text-field v-model="loginData.userPw" prepend-inner-icon="mdi-lock" type="password" label="Password"></v-text-field>
+            <v-btn @click="login" color="orange darken-2 text-capitalize" depressed large block dark class="mb-3">Login</v-btn>
+            <v-btn @click="regist" color="orange darken-2 text-capitalize" depressed large block dark>Sign Up</v-btn>
+            <br>
+            <v-btn @click="kakaoLogin" color="yellow darken-2 text-capitalize" depressed large block dark>카카오로그인</v-btn>
+          </form>
+        </div>
+      </v-card>
+    <!-- </v-layout> -->
+  </v-container>
 </template>
 
 <script>
