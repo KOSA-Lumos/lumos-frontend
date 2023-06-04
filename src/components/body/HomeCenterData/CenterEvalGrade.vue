@@ -55,7 +55,7 @@ export default {
       renderChart();
     });
 
-    const getGradeData = async () => {
+    async function getGradeData () {
       try {
         const response = await axios.get(
           `${serverUrl}/kindergartendetail/${state.center_num}/grade`
@@ -70,7 +70,7 @@ export default {
       } catch (error) {
         console.log(error);
       }
-    };
+    }
 
     const myChart = ref(null);
 
@@ -156,7 +156,7 @@ export default {
       return 0;
     };
 
-    const renderChart = () => {
+    async function renderChart () {
       if (chartInstance !== null) {
         chartInstance.destroy();
       }
@@ -247,7 +247,7 @@ export default {
           },
         },
       });
-    };
+    }
     
     onBeforeUnmount(() => {
       if (chartInstance !== null) {

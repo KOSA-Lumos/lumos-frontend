@@ -1,7 +1,7 @@
 <template>
-  <div v-if="state.testData">
-    <v-table density="compact">
-      <tbody >
+  <div>
+    <v-table v-if="state.testData" density="compact">
+      <tbody>
         <tr>
           <th>센터번호</th>
           <td>{{ state.testData.center_num }}</td>
@@ -92,11 +92,17 @@
         </tr>
       </tbody>
     </v-table>
-  </div>
-  <br />
-  <br />
-  <div id="kakaoshare" class="text-center">
-    <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
+
+    <div v-else>
+      데이터를 불러오는 중입니다...
+    </div>
+
+    <br />
+    <br />
+
+    <div id="kakaoshare" class="text-center">
+      <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
+    </div>
   </div>
 </template>
 
@@ -112,89 +118,42 @@ export default {
   setup() {
     var serverUrl = process.env.VUE_APP_SERVER_URL;
 
+    const state = reactive({
+      center_num: null,
+      testData: null,
+      loading: true, // 로딩 상태를 추가합니다.
+    });
+
+    const getDetailData = async () => {
+      try {
+        const response = await axios.get(
+          `${serverUrl}/kindergartendetail/${state.center_num}/detail`
+        );
+        state.testData = response.data;
+      } catch (error) {
+        console.log(error);
+      } finally {
+        state.loading = false; // 데이터 로딩이 완료되면 로딩 상태를 false로 설정합니다.
+      }
+    };
+
     const kakaoShare = () => {
       window.Kakao.Share.sendCustom({
         templateId: 92638,
-        // 카카오톡이 설치 되지 않았을때 마켓으로 이동
         installTalk: true,
       });
     };
 
-    const data = reactive({
-      kinderInfo: [],
-      response: "",
-    });
-
-    const state = reactive({
-      center_num: null,
-      testData: null,
-    });
-
     onMounted(() => {
       state.center_num = store.getters.getClickedCenter.centerNum;
-      console.log(store.getters.getClickedCenter.centerNum);
       getDetailData();
     });
-
-    const getDetailData = () => {
-      axios
-        .get(`${serverUrl}/kindergartendetail/${state.center_num}/detail`)
-        .then((response) => {
-          state.testData = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    const getData = () => {
-      axios
-        .get(
-          "/api?key=" +
-            process.env.VUE_APP_KINDERGARTEN_API_KEY +
-            "&sidoCode=27&sggCode=27140"
-        )
-        .then((response) => {
-          data.kinderInfo = response.data.kinderInfo;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-
-    getDetailData();
 
     return {
       kakaoShare,
       state,
       getDetailData,
-      testData: state.testData,
-      getData,
-      data,
     };
   },
 };
 </script>
-
-<style scored>
-  tbody th {
-    width: 300px;
-  }
-
-#kakaoshare {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.kakao-share {
-  width: 150px;
-  height: 100px;
-  line-height: 20px;
-  color: black;
-  text-align: center;
-  background: #ffe812;
-  font-size: 15px;
-  cursor: pointer;
-}
-</style>
