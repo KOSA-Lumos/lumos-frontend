@@ -43,7 +43,7 @@ export default {
       testData: null,
     });
 
-    const getTestData = () => {
+    async function getTestData () {
       axios
         .get(`${serverUrl}/kindergartendetail/${state.center_num}/information`)
         .then((response) => {
@@ -52,7 +52,7 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    };
+    }
 
     onMounted(() => {
       state.center_num = store.getters.getClickedCenter.centerNum;

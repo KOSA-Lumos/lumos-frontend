@@ -4,7 +4,7 @@
     <br />
     <br /> -->
     <div><v-btn @click="callEmotionApp">어린이집 후기 분석</v-btn></div>
-    <br>
+    <br />
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
@@ -14,8 +14,10 @@
       v-model="data.emotion"
     ></v-textarea>
     <br />
-    <div><v-btn @click="kinderresourceAPP">어린이집 선택시 고려할 목록</v-btn></div>
-    <br>
+    <div>
+      <v-btn @click="kinderresourceAPP">어린이집 선택시 고려할 목록</v-btn>
+    </div>
+    <br />
     <v-textarea
       bg-color="grey-lighten-5"
       color="cyan"
@@ -27,45 +29,43 @@
   </div>
 
   <div>
-      <!-- <v-btn @click="callNaverApp"
+    <!-- <v-btn @click="callNaverApp"
         >(시연용) Naver 카페검색하기 App v-card로 배치가능</v-btn
       > -->
-    </div>
-    <br />
-    <div id="app">
-      <v-container>
-        <v-card
-          v-for="item in data.Naverresponse.items"
-          :key="item.cafeurl"
-          class="mb-3"
-        >
-          <v-card-text>
-            {{ item.description }}
-          </v-card-text>
-        </v-card>
-      </v-container>
-    </div>
-
-    <v-dialog v-model="data.loading" persistent width="400" height="600">
-      <v-card color="white" dark>
-        <v-card-text class="text-center">
-          <span class="text-body-2">AI 응답 대기중!!</span>
-          <v-progress-circular
-            indeterminate
-            color="yellow"
-          ></v-progress-circular>
+  </div>
+  <br />
+  <div id="app">
+    <v-container>
+      <v-card
+        v-for="item in data.Naverresponse.items"
+        :key="item.cafeurl"
+        class="mb-3"
+      >
+        <v-card-text>
+          {{ item.description }}
         </v-card-text>
-        <v-card-actions>
-          <v-btn color="black" block @click="data.loading = false"
-            >로딩창 끄기</v-btn
-          >
-        </v-card-actions>
       </v-card>
-    </v-dialog>
+    </v-container>
+  </div>
+
+  <v-dialog v-model="data.loading" persistent width="400" height="600">
+    <v-card color="white" dark>
+      <v-card-text class="text-center">
+        <span class="text-body-2">AI 응답 대기중!!</span>
+        <v-progress-circular indeterminate color="yellow"></v-progress-circular>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="black" block @click="data.loading = false"
+          >로딩창 끄기</v-btn
+        >
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
+import store from "@/store";
 
 export default {
   setup() {
@@ -75,69 +75,78 @@ export default {
       mealresponse: "",
       description: {},
       koreanText: "",
+      centerName: "",
       loading: false,
       dialog: false,
     });
 
     async function callEmotionApp() {
-      data.loading = true
+      data.loading = true;
       try {
-        const response = await fetch("http://localhost:5000/emotionApi", {
+        const response = await fetch("http://localhost:5000/naverApi", {
           method: "POST",
+          body: JSON.stringify({ centerName: data.centerName }),
+          headers: {
+            "Content-Type": "application/json",
+          },
         });
         const emotionparse = await response.json();
-        data.emotional = JSON.stringify(emotionparse)          
+        data.emotional = JSON.stringify(emotionparse);
         console.log(data.emotional);
-        const emotionPart = data.emotional.split('"ResponseMetadata"')[0];
+        const emotionPart = data.emotional.split('Mixed')[0];
         // const emotionData = emotionPart['결과'];
-
         data.emotion = JSON.stringify(emotionPart)
-        .replace(/\\/g, "") 
-        .replace(/"/g, "") 
-        .replace(/,/g, "\n") 
-        .replace(/result/g, "분석결과") 
-        .replace(/{/g, "\n") 
-        .replace(/}/g, "\n") 
-        .replace(/:\s*(\d+\.\d{0,4})/g, ": $1");
-        data.loading = false
+          .replace(/\\/g, "")
+          .replace(/"/g, "")
+          .replace(/,/g, "\n")
+          .replace(/result/g, "분석결과")
+          .replace(/Sentiment/g, "감정")
+          .replace(/Score/g, "점수")
+          .replace(/Positive/g, "     긍정적")
+          .replace(/Negative/g, "    부정적")
+          .replace(/Neutral/g, "    중랍")
+          .replace(/{/g, "\n")
+          .replace(/}/g, "\n")
+          .replace(/:\s*(\d+\.\d{0,4})/g, ": $1");
+        data.loading = false;
         console.log(emotionPart);
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
 
     async function callGptApp() {
-      data.loading = true
+      data.loading = true;
       try {
         const response = await fetch("http://localhost:5000/gptApi", {
           method: "POST",
         });
         const responseData = await response.json();
-        
+
         data.response = responseData;
-        data.loading = false
+        data.loading = false;
         console.log(responseData);
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
 
     async function callNaverApp() {
-      data.loading = true
+      data.loading = true;
       try {
         const response = await fetch("http://localhost:5000/naverApi", {
           method: "POST",
         });
         const responseData = await response.json();
-        
-        data.Naverresponse = responseData
-        data.loading = false
+
+        data.Naverresponse = responseData;
+        data.loading = false;
         console.log(responseData);
         console.log(data.Naverresponse);
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
@@ -149,13 +158,13 @@ export default {
           method: "POST",
         });
         const responseData = await mealresponse.text(); // Response를 text로 변환
-        
+
         data.mealresponse = responseData;
         data.mealreplace = data.mealresponse;
-        data.loading = false
+        data.loading = false;
         // console.log(data.mealreplace);
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
@@ -170,7 +179,7 @@ export default {
           }
         );
         const responseData = await googlemealresponse.text();
-        
+
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.googlemealresponse = decodedText;
@@ -180,14 +189,13 @@ export default {
         } else {
           console.log("data.googlemealresponse is not defined.");
         }
-        data.loading = false
+        data.loading = false;
         data.koreanText = data.googlemealresponse
           .replace(/(^{|}$)/g, "")
           .replace(/"/, "")
           .replace(/\\ n/g, "\n");
-
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
@@ -202,7 +210,7 @@ export default {
           }
         );
         const responseData = await googletransrate.text();
-        
+
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.googletransrate = decodedText;
@@ -212,19 +220,19 @@ export default {
         } else {
           console.log("data.googletransrate is not defined.");
         }
-        data.loading = false
+        data.loading = false;
         data.koreanText = data.googletransrate
           .replace(/(^{|}$)/g, "")
           .replace(/"/, "")
           .replace(/\\ n/g, "\n");
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
 
-async function kinderresourceAPP() {
-  data.loading = true;
+    async function kinderresourceAPP() {
+      data.loading = true;
       try {
         const kinderresource = await fetch(
           "http://localhost:5000/kinderresourceAPI",
@@ -233,7 +241,7 @@ async function kinderresourceAPP() {
           }
         );
         const responseData = await kinderresource.text();
-        
+
         const decodedResponse = JSON.parse(responseData);
         const decodedText = decodedResponse.result.translatedText;
         data.kinderresource = decodedText;
@@ -243,16 +251,20 @@ async function kinderresourceAPP() {
         } else {
           console.log("data.kinderresource is not defined.");
         }
-        data.loading = false
+        data.loading = false;
         data.koreanText = data.kinderresource
           .replace(/(^{|}$)/g, "")
           .replace(/"/, "")
           .replace(/\\ n/g, "\n");
       } catch (error) {
-        data.loading = false
+        data.loading = false;
         console.error(error);
       }
     }
+
+    onMounted(() => {
+      data.centerName = store.getters.getClickedCenter.centerName;
+    });
 
     return {
       data,
