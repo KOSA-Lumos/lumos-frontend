@@ -1,7 +1,7 @@
 <template>
   <div style="width: 100%; height: 40px;">
     <v-row>
-      <v-col cols="2">
+      <v-col cols="2" style="min-width: 150px;">
         <v-checkbox
           color="red"
           v-model="kidscare"
@@ -9,14 +9,14 @@
           style="margin-left: 10px;"
         ></v-checkbox>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="2" style="min-width: 150px;">
         <v-checkbox
           color="orange"
           v-model="kinder"
           :label="`유치원`"
         ></v-checkbox>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="2" style="min-width: 150px;">
         <v-checkbox
           color="yellow-darken-2"
           v-model="extendcare"
