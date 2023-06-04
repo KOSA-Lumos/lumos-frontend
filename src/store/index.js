@@ -9,7 +9,12 @@ export default createStore({
     userId : '',
     loginUser : false,
 
-    // Center
+    // Search Option
+    kidscareOption: true,
+    kinderOption: true,
+    extendcareOption: false,
+    
+    // Center(보육시설)
     recommendedCenters: [],
     searchedCenters: [],
     clickedCenter: {},
@@ -40,7 +45,18 @@ export default createStore({
       }
     },
 
-    // Center
+    // Search Option
+    getKidscareOption(state) {
+      return state.kidscareOption;
+    },
+    getKinderOption(state) {
+      return state.kinderOption;
+    },
+    getExtendcareOption(state) {
+      return state.extendcareOption;
+    },
+
+    // Center(보육시설)
     getRecommendedCenters(state) {
       return state.recommendedCenters;
     },
@@ -81,7 +97,18 @@ export default createStore({
       state.loginUser = value;
     },
 
-    // Center
+    // Search Option
+    mutSetKidscareOption(state, newKidscareOption) {
+      state.kidscareOption = newKidscareOption;
+    },
+    mutSetKinderOption(state, newKinderOption) {
+      state.kinderOption = newKinderOption;
+    },
+    mutSetExtendcareOption(state, newExtendcareOption) {
+      state.extendcareOption = newExtendcareOption;
+    },
+
+    // Center(보육시설)
     mutSetRecommendedCenters(state, newRecommendedCenters) {
       state.recommendedCenters = newRecommendedCenters;
     },
@@ -116,7 +143,18 @@ export default createStore({
       context.commit("mutSetUserId", userId);
     },
 
-    // Center
+    // Search Option
+    setKidscareOption({ commit }, newKidscareOption) {
+      commit("mutSetKidscareOption", newKidscareOption);
+    },
+    setKinderOption({ commit }, newKinderOption) {
+      commit("mutSetKinderOption", newKinderOption);
+    },
+    setExtendcareOption({ commit }, newExtendcareOption) {
+      commit("mutSetExtendcareOption", newExtendcareOption);
+    },
+
+    // Center(보육시설)
     setRecommendedCenters({ commit }, newRecommendedCenters) {
       commit("mutSetRecommendedCenters", newRecommendedCenters);
     },
