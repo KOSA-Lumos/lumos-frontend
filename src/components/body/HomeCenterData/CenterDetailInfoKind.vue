@@ -60,12 +60,14 @@
         </tr>
         <tr>
           <th>차량운영여부</th>
-          <td>{{ state.centerDetailVehicle }}</td>
+          <td>{{ state.centerDetailVehicle === "Y" ? "운영" : "미운영" }}</td>
         </tr>
         <tr>
           <th>홈페이지주소</th>
           <td>
-            <a v-bind:href="state.centerDetailHompage" target="_blank">{{ state.centerDetailHompage }}</a>
+            <a v-bind:href="state.centerDetailHompage" target="_blank">{{
+              state.centerDetailHompage
+            }}</a>
           </td>
         </tr>
         <tr>
@@ -142,7 +144,8 @@ export default {
       state.centerDetailVehicle =
         store.getters.getClickedCenter.centerDetailVehicle;
       state.centerExtendcare = store.getters.getClickedCenter.centerExtendcare;
-      state.centerDetailHompage = store.getters.getClickedCenter.centerDetailHompage;
+      state.centerDetailHompage =
+        store.getters.getClickedCenter.centerDetailHompage;
       state.centerName = store.getters.getClickedCenter.centerName;
       state.centerNum = store.getters.getClickedCenter.centerNum;
       state.centerState = store.getters.getClickedCenter.centerState;
