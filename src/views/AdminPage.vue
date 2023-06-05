@@ -16,11 +16,11 @@
       v-model:page="state.page"
       :items-per-page="state.itemsPerPage"
       :footer-props="{
-        itemsPerPageOptions: [5, 10, 15],
+        itemsPerPageOptions: [10, 20, 30],
         showFirstLastPage: true,
-        itemsPerPageText: '5',
+        itemsPerPageText: '10',
         itemsPerPageAllText: '모두',
-        pageText: '{0}-{1} / {2}',
+        pageText: '{0}-{1} / {1}',
         noResultsText: '일치하는 항목이 없습니다.',
       }"
       :loading="state.loading"
@@ -91,7 +91,7 @@ export default {
     const state = reactive({
       userList: null,
       page: 1,
-      itemsPerPage: 5,
+      itemsPerPage: 10,
       pageCount: 0,
     });
 
@@ -165,9 +165,15 @@ export default {
 </script>
 <style scoped>
 .userList {
-  margin: 50px;
+  margin: 10px;
 }
 
+.userList td {
+  font-size: 14px;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden; /* 넘친 텍스트 감추기 */
+  text-overflow: ellipsis; /* 넘친 텍스트 생략 부호 (...) 표시 */
+}
 .search-field {
   max-width: 300px;
 }

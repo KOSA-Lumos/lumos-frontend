@@ -41,13 +41,23 @@
         <tr>
           <th>팩스번호</th>
           <td>{{ state.testData.center_detail_fax }}</td>
+          <div class="text-center">
+            <v-btn id="kakaoshare" class="kakao-share" @click="printShare"
+              >화면인쇄 및 공유하기</v-btn
+            >
+          </div>
         </tr>
         <tr>
-          <th>반수</th>
+          <th>방수</th>
           <td>{{ state.testData.center_detail_roomcount }}</td>
+          <div id="kakaoshare" class="text-center">
+            <v-btn class="kakao-share" @click="kakaoShare"
+              >카카오 공유하기</v-btn
+            >
+          </div>
         </tr>
         <tr>
-          <th>반면적</th>
+          <th>방면적</th>
           <td>{{ state.testData.center_detail_roomsize }}</td>
         </tr>
         <tr>
@@ -81,9 +91,11 @@
         <tr>
           <th>홈페이지주소</th>
           <td>
-            <a v-bind:href="state.testData.center_detail_hompage" target="_blank">{{
-              state.testData.center_detail_hompage
-            }}</a>
+            <a
+              v-bind:href="state.testData.center_detail_hompage"
+              target="_blank"
+              >{{ state.testData.center_detail_hompage }}</a
+            >
           </td>
         </tr>
         <tr>
@@ -93,16 +105,8 @@
       </tbody>
     </v-table>
 
-    <div v-else>
-      데이터를 불러오는 중입니다...
-    </div>
+    <div v-else>데이터를 불러오는 중입니다...</div>
 
-    <br />
-    <br />
-
-    <div id="kakaoshare" class="text-center">
-      <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
-    </div>
   </div>
 </template>
 
@@ -139,9 +143,13 @@ export default {
 
     const kakaoShare = () => {
       window.Kakao.Share.sendCustom({
-        templateId: 92638,
+        templateId: 94641,
         installTalk: true,
       });
+    };
+
+    const printShare = () => {
+      print();
     };
 
     onMounted(() => {
@@ -151,9 +159,33 @@ export default {
 
     return {
       kakaoShare,
+      printShare,
       state,
       getDetailData,
     };
   },
 };
 </script>
+
+<style scored>
+#kakaoshare {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.text-center {
+  display: flex;
+  justify-content: center;
+}
+
+.kakao-share {
+  width: 150px;
+  height: 100px;
+  line-height: 20px;
+  color: black;
+  text-align: center;
+  background: #ffe812;
+  font-size: 13px;
+  cursor: pointer;
+}
+</style>

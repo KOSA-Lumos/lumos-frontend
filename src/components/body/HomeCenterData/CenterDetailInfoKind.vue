@@ -29,10 +29,20 @@
         <tr>
           <th>전화번호</th>
           <td>{{ state.centerDetailPhone }}</td>
+          <div class="text-center">
+            <v-btn id="kakaoshare" class="kakao-share" @click="printShare"
+              >화면인쇄 및 공유하기</v-btn
+            >
+          </div>
         </tr>
         <tr>
           <th>방수</th>
           <td>{{ state.centerDetailRoomcount }}</td>
+          <div id="kakaoshare" class="text-center">
+            <v-btn class="kakao-share" @click="kakaoShare"
+              >카카오 공유하기</v-btn
+            >
+          </div>
         </tr>
         <tr>
           <th>방면적</th>
@@ -79,9 +89,6 @@
   </div>
   <br />
   <br />
-  <div id="kakaoshare" class="text-center">
-    <v-btn class="kakao-share" @click="kakaoShare">카카오 공유하기</v-btn>
-  </div>
 </template>
 
 
@@ -96,7 +103,7 @@ export default {
   setup() {
     const kakaoShare = () => {
       window.Kakao.Share.sendCustom({
-        templateId: 92638,
+        templateId: 94641,
         // 카카오톡이 설치 되지 않았을때 마켓으로 이동
         installTalk: true,
       });
@@ -152,7 +159,12 @@ export default {
       state.centerType = store.getters.getClickedCenter.centerType;
     });
 
+    const printShare = () => {
+      print();
+    };
+
     return {
+      printShare,
       kakaoShare,
       state,
       testData: state.testData,
@@ -172,6 +184,10 @@ tbody th {
   justify-content: center;
   align-items: center;
 }
+.text-center {
+  display: flex;
+  justify-content: center;
+}
 
 .kakao-share {
   width: 150px;
@@ -180,7 +196,7 @@ tbody th {
   color: black;
   text-align: center;
   background: #ffe812;
-  font-size: 15px;
+  font-size: 13px;
   cursor: pointer;
 }
 </style>
