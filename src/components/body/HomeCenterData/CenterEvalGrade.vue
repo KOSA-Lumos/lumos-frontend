@@ -24,6 +24,10 @@
         </tr>
       </tbody>
     </v-table>
+<div v-else>
+  <v-button class="refresh-button" @click="refreshPage">새로고침</v-button>
+  <p class="loading-text">데이터가 로딩 중입니다. 버튼을 눌러주세요.</p>
+</div>
   </div>
   <div>
     <canvas id="myChart" style="height: 500px;"></canvas>
@@ -47,6 +51,11 @@ export default {
       center_num: null,
       testData: {},
     });
+
+    async function refreshPage() {
+      await getGradeData();
+      renderChart();
+    }
 
 
     onMounted(() => {
@@ -262,6 +271,7 @@ export default {
       state,
       getGradeData,
       renderChart,
+      refreshPage,
       testData: state.testData,
     };
   },
@@ -272,4 +282,19 @@ export default {
 .myChart{
   height: 1000px;
 }
+
+  .refresh-button {
+    background-color: yellow;
+    color: black;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .loading-text {
+    margin-top: 10px;
+    font-style: italic;
+    color: #757575;
+  }
 </style>

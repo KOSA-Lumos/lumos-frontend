@@ -8,6 +8,7 @@ export default createStore({
     // User
     userId : '',
     loginUser : false,
+    adminYn: '',
 
     // Search Option
     kidscareOption: true,
@@ -31,6 +32,9 @@ export default createStore({
     // User
     getUserId: function(state) {
       return state.userId;
+    },
+    getAdminYn: function(state) {
+      return state.adminYn;
     },
     loginUser: function(state){
       return state.loginUser;
@@ -89,9 +93,13 @@ export default createStore({
       state.userId = userId;
       state.loginUser = true;
     },
+    mutSetadminYn(state, adminYn) {
+      state.adminYn = adminYn;
+    },
     logout(state){
       state.userId='';
       state.loginUser = false;
+      state.adminYn = 'N';
     },
     setloginUser(state, value){
       state.loginUser = value;
@@ -141,6 +149,9 @@ export default createStore({
     // User
     setUserId: (context, userId) => {
       context.commit("mutSetUserId", userId);
+    },
+    setAdminYn(context, adminYn) {
+      context.commit('mutSetadminYn', adminYn);
     },
 
     // Search Option

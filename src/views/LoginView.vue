@@ -108,13 +108,15 @@ export default {
         } else {
           store.getters.changeLoginUser;
           store.dispatch('setUserId', res.data.userId)
+          store.dispatch('setAdminYn', res.data.adminYn)
+          console.log(store.getters.getAdminYn);
           console.log("~~로그인 성공^ㅁ^~~");
           console.log(res);
         }
         if (res.data.adminYn == "Y") { 
           router.push('/'); 
         } else { 
-          // router.push('/'); 
+          router.push('/'); 
         }
          
       })
