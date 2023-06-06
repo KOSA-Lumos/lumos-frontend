@@ -13,8 +13,35 @@
     </v-row>
     
     <v-divider></v-divider>
-
     <div v-for="scdCenter in searchedCenters"
+      :key="scdCenter.centerNum"
+      @click="displayClickedCenterDetail(scdCenter)">
+      <h2>{{ scdCenter.centerName }}</h2>
+    <p>
+      공석:
+      <span v-if="scdCenter.centerDetailRegularperson - scdCenter.centerDetailCurrentperson === 0">
+        <v-icon class="mdi-no">mdi-account-multiple</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-yes">mdi-account-multiple</v-icon>
+      </span>
+      | 차량:
+      <span v-if="scdCenter.centerDetailVehicle === 'Y' || scdCenter.centerDetailVehicle === '운영'">
+        <v-icon class="mdi-yes">mdi-car</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-no">mdi-car-off</v-icon>
+      </span>
+      | 연장:
+      <span v-if="scdCenter.centerExtendcare !== 0">
+        <v-icon class="mdi-yes">mdi-clock-check</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-no">mdi-clock-check</v-icon>
+      </span>
+    </p>
+
+    <!-- <div v-for="scdCenter in searchedCenters"
       :key="scdCenter.centerNum"
       @click="displayClickedCenterDetail(scdCenter)">
       <h2>{{ scdCenter.centerName }}</h2>
@@ -26,7 +53,7 @@
           <span v-if="scdCenter.centerExtendcare === 0">X</span>
           <span v-if="scdCenter.centerExtendcare === 1">O</span>
         
-      </p>
+      </p> -->
       <v-divider />
     </div>
 
