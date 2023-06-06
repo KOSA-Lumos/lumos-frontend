@@ -4,11 +4,11 @@
       <v-tabs fixed-tabs v-model="tab" bg-color="yellow lighten-4">
         <v-tab :value="1">
           <v-icon left>mdi-information</v-icon>
-          기본정보(유)
+          기본정보
         </v-tab>
         <v-tab :value="2">
           <v-icon left>mdi-file-document</v-icon>
-          상세정보(유)
+          상세정보
         </v-tab>
         <v-tab :value="3">
           <v-icon left>mdi-chart-bar</v-icon>

@@ -50,17 +50,8 @@
       :key="rcmdCenter.centerNum"
       @click="displayClickedCenterDetail(rcmdCenter)"
     >
-      <h2>{{ rcmdCenter.centerName }}</h2>
-      <p>
-        번호:{{ rcmdCenter.centerNum }} | 공석:{{
-          rcmdCenter.centerDetailRegularperson -
-          rcmdCenter.centerDetailCurrentperson
-        }}
-        | 차량:{{ rcmdCenter.centerDetailVehicle }} | 연장:
-        <span v-if="rcmdCenter.centerExtendcare === 0">X</span>
-        <span v-if="rcmdCenter.centerExtendcare === 1">O</span>
-        <!-- 찜하기  -->
-        <v-icon
+      <h2>{{ rcmdCenter.centerName }}<v-icon
+          size="25"
           @click.stop="addFavoriteCenter(rcmdCenter.centerNum)"
           :color="
             isFavorite.includes(rcmdCenter.centerNum)
@@ -68,8 +59,30 @@
               : 'grey-lighten-2'
           "
           >mdi-star</v-icon
-        >
-      </p>
+        ></h2>
+    <p>
+      공석:
+      <span v-if="rcmdCenter.centerDetailRegularperson - rcmdCenter.centerDetailCurrentperson === 0">
+        <v-icon class="mdi-no">mdi-account-multiple</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-yes">mdi-account-multiple</v-icon>
+      </span>
+      | 차량:
+      <span v-if="rcmdCenter.centerDetailVehicle === 'Y' || rcmdCenter.centerDetailVehicle === '운영'">
+        <v-icon class="mdi-yes">mdi-car</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-no">mdi-car-off</v-icon>
+      </span>
+      | 연장:
+      <span v-if="rcmdCenter.centerExtendcare !== 0">
+        <v-icon class="mdi-yes">mdi-clock-check</v-icon>
+      </span>
+      <span v-else>
+        <v-icon class="mdi-no">mdi-clock-check</v-icon>
+      </span>
+    </p>
       <v-divider />
     </div>
   </div>
@@ -112,8 +125,13 @@ export default {
     // 로컬 스토리지에서 찜한 목록을 가져옴
     // console.log("로컬\n",localStorage);
     const favorites = localStorage.getItem("favorites");
-    
-    if (favorites !== "" && favorites !== null && favorites !== undefined && favorites !== []) {
+
+    if (
+      favorites !== "" &&
+      favorites !== null &&
+      favorites !== undefined &&
+      favorites !== []
+    ) {
       this.isFavorite = JSON.parse(favorites);
     }
   },
@@ -238,5 +256,13 @@ export default {
   color: yellow;
   stroke: yellow;
   stroke-width: 1px;
+}
+
+.mdi-yes{
+  color: orange;
+}
+
+.mdi-no{
+  color: gainsboro;
 }
 </style>
