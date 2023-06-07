@@ -1,5 +1,8 @@
 export default {
   computed: {
+    userId() {
+      return this.$store.getters.getUserId;
+    },
     recommendedCenters() {
       return this.$store.getters.getRecommendedCenters;
     },
@@ -8,6 +11,15 @@ export default {
     },
     clickPosition() {
       return this.$store.getters.getClickPosition;
+    },
+    clickAddress() {
+      return this.$store.getters.getClickAddress;
+    },
+    clickAddressState() {
+      return this.$store.getters.getClickAddressState;
+    },
+    clickAddressCity() {
+      return this.$store.getters.getClickAddressCity;
     },
   },
   data() {
@@ -53,6 +65,26 @@ export default {
       //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
       this.map = new kakao.maps.Map(container, options);
       this.setupClickListener();
+      
+      // 만악 store에 userId 데이터가 저장되어 있다면, 노란 마커 놓고, 화면 중앙으로 위치
+      if (this.userId !== '') {
+        console.log("** userId : ", this.userId);
+        // clickAddress 데이터로 위경도 데이터 추출하기
+        let geocoder = new kakao.maps.services.Geocoder(); // geocoder 객체 생성
+        let latitude = null;
+        let longitude = null;
+
+        // 주소로 좌표 변환을 요청합니다.
+        geocoder.addressSearch(this.clickAddress, (result, status) => {
+          if (status === kakao.maps.services.Status.OK) {
+            latitude = result[0].y; // 위도
+            longitude = result[0].x; // 경도
+            this.$store.dispatch('setClickPosition', [latitude, longitude]);
+          } else {
+            console.log("주소 변환 실패: " + status);
+          }
+        });
+      }
     },
     setupClickListener() {
       console.log("@@ setupClickListener 실행");
