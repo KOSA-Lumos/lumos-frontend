@@ -46,38 +46,41 @@ export default {
       console.log("test");
       window.Kakao.API.request({
       url:'/v2/user/me',
+      
       success: res=>{
         // const kakao_account = res.kakao_account;
         const userId = res.kakao_account.email;
         console.log(res)
-        store.dispatch("setUserId", userId) // -> store.commit("mutSetUSerId", userId)
+        store.dispatch("setAdminYn", userId) // -> store.commit("mutSetUSerId", userId)
         console.log('kakao_account', kakao_account);
         console.log("로그인성공");
+        router.push('/signUp')
         //axios로 spring에 요청
         // 회원가입시킬지, 로그인시킬지 spirng 에서 db에 검사해서 확인한뒤
                   // 요청을 보낼 주소, 지금은 우리 스프링 주소로 보냄
-          axios.get("http://localhost:8080"+`/springweb/user/kakaoLogin`, {
-          params : {
-            // key : value
-            userId : userId
-          },
-        }) // API 경로와 필요한 데이터를 전달 
-        .then(res => {
-          console.log(res.data);
-          if (res.data.userId == null) {
-            console.log(store.getters.getUserId)
-            router.push('/signUp');
-            console.log("회원가입페이지로 보내기")
-          } else {
-            router.push('/');
-            console.log('메인페이지로 보내기')
-          }
-          console.log(res.data.userId);
-          console.log("카카오 로그인 API 호출 성공");
-        })
-        .catch(err => {
-          console.log("카카오 로그인 API 호출 실패", err);
-        });
+        //   axios.get("http://localhost:8080"+`/springweb/user/kakaoLogin`, {
+        //   params : {
+        //     // key : value
+        //     userId : userId
+        //   },
+        // }) // API 경로와 필요한 데이터를 전달 
+        // .then(res => {
+        //   console.log(res.data);
+        //   if (res.data.userId == null) {
+        //     console.log(store.getters.getUserId)
+        //     router.push('/signUp');
+        //     console.log("회원가입페이지로 보내기")
+        //   } else {
+        //     router.push('/');
+        //     console.log('메인페이지로 보내기')
+        //   }
+        //   console.log(res.data.userId);
+        //   console.log("카카오 로그인 API 호출 성공");
+        // })
+        // .catch(err => {
+        //   console.log("카카오 로그인 API 호출 실패", err);
+        //   router.push('/signUp');
+        // });
 
       }
 

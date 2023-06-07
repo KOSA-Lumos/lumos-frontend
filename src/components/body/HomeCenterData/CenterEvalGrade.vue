@@ -24,20 +24,20 @@
         </tr>
       </tbody>
     </v-table>
-<div v-else>
-  <v-button class="refresh-button" @click="refreshPage">새로고침</v-button>
-  <p class="loading-text">데이터가 로딩 중입니다. 버튼을 눌러주세요.</p>
-</div>
+    <div v-else>
+      <button class="refresh-button" @click="refreshPage">새로고침</button>
+      <p class="loading-text">데이터가 로딩 중입니다. 버튼을 눌러주세요.</p>
+    </div>
   </div>
   <div>
-    <canvas id="myChart" style="height: 500px;"></canvas>
+    <canvas id="myChart" style="height: 500px"></canvas>
   </div>
 </template> 
 
 
 
 <script>
-import { ref, reactive, onMounted, onBeforeUnmount } from 'vue';
+import { ref, reactive, onMounted, onBeforeUnmount } from "vue";
 import Chart from "chart.js/auto";
 import axios from "axios";
 import store from "@/store";
@@ -57,14 +57,15 @@ export default {
       renderChart();
     }
 
-
-    onMounted(() => {
+    onMounted(async () => {
       state.center_num = store.getters.getClickedCenter.centerNum;
-      getGradeData();
-      renderChart();
+      await getGradeData();
+      if (myChart.value !== null) {
+        renderChart();
+      }
     });
 
-    async function getGradeData () {
+    async function getGradeData() {
       try {
         const response = await axios.get(
           `${serverUrl}/kindergartendetail/${state.center_num}/grade`
@@ -165,7 +166,7 @@ export default {
       return 0;
     };
 
-    async function renderChart () {
+    async function renderChart() {
       if (chartInstance !== null) {
         chartInstance.destroy();
       }
@@ -176,19 +177,23 @@ export default {
           data: [
             {
               x: "등급",
-              y: getScoreByGrade(state.testData.childcare_eval_grade)
+              y: getScoreByGrade(state.testData.childcare_eval_grade),
             },
-            { x: "보육과정 및 상호작용",
-              y: getCommunication(state.testData.childcare_eval_communication) 
+            {
+              x: "보육과정 및 상호작용",
+              y: getCommunication(state.testData.childcare_eval_communication),
             },
-            { x: "보육환경 및 운영관리",
-              y: getEnvironment(state.testData.childcare_eval_environment) 
+            {
+              x: "보육환경 및 운영관리",
+              y: getEnvironment(state.testData.childcare_eval_environment),
             },
-            { x: "건강·안전",
-              y: getSafety(state.testData.childcare_eval_safety) 
+            {
+              x: "건강·안전",
+              y: getSafety(state.testData.childcare_eval_safety),
             },
-            { x: "교직원",
-              y: getTeacher(state.testData.childcare_eval_teacher) 
+            {
+              x: "교직원",
+              y: getTeacher(state.testData.childcare_eval_teacher),
             },
           ],
           type: "scatter",
@@ -257,7 +262,7 @@ export default {
         },
       });
     }
-    
+
     onBeforeUnmount(() => {
       if (chartInstance !== null) {
         chartInstance.destroy();
@@ -279,22 +284,22 @@ export default {
 </script>
 
 <style scoped>
-.myChart{
+.myChart {
   height: 1000px;
 }
 
-  .refresh-button {
-    background-color: yellow;
-    color: black;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    cursor: pointer;
-  }
-  
-  .loading-text {
-    margin-top: 10px;
-    font-style: italic;
-    color: #757575;
-  }
+.refresh-button {
+  background-color: yellow;
+  color: black;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.loading-text {
+  margin-top: 10px;
+  font-style: italic;
+  color: #757575;
+}
 </style>

@@ -119,21 +119,28 @@ export default {
     },
     clickAddressCity() {
       return this.$store.getters.getClickAddressCity;
-    },
+    },  
   },
   created() {
     // 로컬 스토리지에서 찜한 목록을 가져옴
     // console.log("로컬\n",localStorage);
-    const favorites = localStorage.getItem("favorites");
+    // const favorites = '"1234"'
+    const favoritesFromLocalStorage = localStorage.getItem("favorites");
+    const favorites = !favoritesFromLocalStorage ? 123 : favoritesFromLocalStorage;
 
     if (
       favorites !== "" &&
       favorites !== null &&
       favorites !== undefined &&
-      favorites !== []
+      favorites !== [] &&
+      favorites !== 'undefined'
     ) {
       this.isFavorite = JSON.parse(favorites);
     }
+
+    if (!Array.isArray(this.isFavorite)) {
+    this.isFavorite = []; // Initialize as an empty array
+  }
   },
 
   methods: {
