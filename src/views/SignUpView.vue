@@ -106,10 +106,11 @@ export default {
     const router = useRouter();
 
     const kakao_account = ref(null);
-
+    const output = store.getters.getAdminYn;
     const signUpData = reactive({
       // userId: '',
-      userId: store.getters.getUserId,
+      output: store.getters.getAdminYn,
+      userId: output === 'Y' || output === 'N' ? '' : output,
       userPw: "",
       userName: "",
       nickname: "",

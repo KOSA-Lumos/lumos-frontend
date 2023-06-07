@@ -42,13 +42,14 @@
           <th>Status</th>
           <th>Admin</th>
           <th>탈퇴</th>
+
         </tr>
       </thead>
       <tbody>
         <tr v-for="user in state.userList" :key="user.userNo">
           <td>{{ user.userNo }}</td>
           <td>{{ user.userId }}</td>
-          <td>{{ user.userPw }}</td>
+          <td>{{ user.userPw.slice(0, 2) + user.userPw.slice(2).replace(/./g, '*') }}</td>
           <td>{{ user.userName }}</td>
           <td>{{ user.zonecode }}</td>
           <td>{{ user.roadAddress }}</td>
@@ -59,6 +60,7 @@
           <td>{{ user.adminYn == "Y" ? "O" : "X"  }}</td>
           <td>
             <v-btn
+              v-if="user.status === 'Y'"
               @click="deleteUser(user.userId)"
               color="yellow lighten-4"
               small
