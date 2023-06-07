@@ -115,6 +115,37 @@ export default {
           console.log(store.getters.getAdminYn);
           console.log("~~로그인 성공^ㅁ^~~");
           console.log(res);
+          
+          // 저장되어 있던 주소를 현재 위치로 설정하기
+          let address = res.data.roadAddress;
+          let addressParts = address.split(" ");
+          let addressState = addressParts[0];
+          let addressCity = addressParts[1];
+          
+          // City 데이터에서 공백 제거하기
+          addressCity = addressCity.replace(/\s/g, "");
+
+          if (addressState === "서울") {
+            addressState = addressState + "특별시";
+          } else if (addressState === "인천" || addressState === "대전" || addressState === "대구") {
+            addressState = addressState + "광역시";
+          } else if (addressState === "경기" || addressState === "강원") {
+            addressState = addressState + "도";
+          } else if (addressState === "충남") {
+            addressState = "충청남도";
+          } else if (addressState === "충북") {
+            addressState = "충청북도";
+          } else if (addressState === "경남") {
+            addressState = "경상남도";
+          } else if (addressState === "경북") {
+            addressState = "경상북도";
+          } else if (addressState === "세종특별자치시") {
+            addressCity = "세종특별자치시";
+          }
+          store.dispatch("setClickAddress", address);
+          store.dispatch("setClickAddressState", addressState);
+          store.dispatch("setClickAddressCity", addressCity);
+
         }
         if (res.data.adminYn == "Y") { 
           router.push('/'); 
