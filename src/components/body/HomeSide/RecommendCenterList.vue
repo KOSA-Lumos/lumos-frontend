@@ -105,6 +105,15 @@ export default {
     };
   },
   computed: {
+    kidscareOption() {
+      return this.$store.getters.getKidscareOption;
+    },
+    kinderOption() {
+      return this.$store.getters.getKinderOption;
+    },
+    extendcareOption() {
+      return this.$store.getters.getExtendcareOption;
+    },
     recommendedCenters() {
       return this.$store.getters.getRecommendedCenters;
     },
@@ -151,6 +160,9 @@ export default {
       let cPosition = this.clickPosition;
       let cAddressState = this.clickAddressState;
       let cAddressCity = this.clickAddressCity;
+      let kidscareOption = this.kidscareOption;
+      let kinderOption = this.kinderOption;
+      let extendcareOption = this.extendcareOption;
 
       let serverUrl = process.env.VUE_APP_SERVER_URL;
       this.$axios
@@ -161,6 +173,9 @@ export default {
             centerCity: cAddressCity,
             centerLatitude: cPosition[0],
             centerLongitude: cPosition[1],
+            kidscareOption: kidscareOption,
+            kinderOption: kinderOption,
+            extendcareOption: extendcareOption,
           },
         })
         .then((response) => {
