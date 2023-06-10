@@ -3,7 +3,7 @@
 
     <v-row no-gutters>
       <v-col cols="8">
-        <div style="margin-right: 13px;">
+        <div>
           <home-contents-layout />
         </div>
       </v-col>
